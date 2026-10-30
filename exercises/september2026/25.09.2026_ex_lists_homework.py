@@ -13,17 +13,17 @@
 
 # Lösung
 
-# transaktionen = [50, -20, 100, -5, -30, 15]
+transaktionen = [50, -20, 100, -5, -30, 15]
 
-# negativ_count = 0
-# summe = 0
+negativ_count = 0
+summe = 0
 
-# for i in transaktionen:
-#     if i <0:
-#         negativ_count +=1
-#     elif i >0:
-#         summe += i 
-# print(f"Es gibt insgesamt {negativ_count} Negative Auszahlungen\nDie Summe aller Einzahlungen ergibt {summe}")
+for i in transaktionen:
+    if i <0:
+        negativ_count +=1
+    elif i >0:
+        summe += i 
+print(f"Es gibt insgesamt {negativ_count} Negative Auszahlungen\nDie Summe aller Einzahlungen ergibt {summe}")
 
 
 # =====================================================================
@@ -41,13 +41,13 @@
 
 # Lösung
 
-# namen = ["Tom", "Anna", "Maximilian", "Eva", "Katharina", "Jan"]
+namen = ["Tom", "Anna", "Maximilian", "Eva", "Katharina", "Jan"]
 
-# long_name = []
+long_name = []
 
-# for i in namen:
-#     if len(i) > 4:
-#         long_name.append(i)
-# print(f"Die namen mit mehr als 4 Buchstaben sind: {long_name}\nEs sind insgesamt {len(long_name)} Namen.")
+for i in namen:
+    if len(i) > 4:
+        long_name.append(i)
+print(f"Die namen mit mehr als 4 Buchstaben sind: {long_name}\nEs sind insgesamt {len(long_name)} Namen.")
 
 # =====================================================================
