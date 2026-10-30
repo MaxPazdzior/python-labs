@@ -13,29 +13,29 @@
 
 # Meine Lösung
 
-# temperatur = 31
+temperatur = 31
 
-# if temperatur > 30:
-#     print("Es ist heiß!")
-# elif temperatur >=15 and temperatur <=30:
-#     print("Angenehm.")
-# elif temperatur >=0 and temperatur <=14:
-#     print("Ziehe eine Jacke an.")
-# elif temperatur <0:
-#     print("Frostig!")
+if temperatur > 30:
+    print("Es ist heiß!")
+elif temperatur >=15 and temperatur <=30:
+    print("Angenehm.")
+elif temperatur >=0 and temperatur <=14:
+    print("Ziehe eine Jacke an.")
+elif temperatur <0:
+    print("Frostig!")
 
 # Daniels Lösung
 
-# temperatur = 31
+temperatur = 31
 
-# if temperatur > 30:
-#     print("Es ist heiß!")
-# elif temperatur >= 15:
-#     print("Angenehm.")
-# elif temperatur >= 0:
-#     print("Zieh eine Jacke an.")
-# else:
-#     print("Frostig!")
+if temperatur > 30:
+    print("Es ist heiß!")
+elif temperatur >= 15:
+    print("Angenehm.")
+elif temperatur >= 0:
+    print("Zieh eine Jacke an.")
+else:
+    print("Frostig!")
 
 # ==============================================================================
 
@@ -53,29 +53,29 @@
 
 # Meine Lösung (Ist falsch, da das untere else zum ersten if soll)
 
-# apfel_ist_reif = TRUE
-# apfel_ist_faul = FALSE
+apfel_ist_reif = TRUE
+apfel_ist_faul = FALSE
 
-# if apfel_ist_reif:
-#     if apfel_ist_faul:
-#         print("Wegwerfen!")
-#     elif apfel_ist_reif:
-#         print("Guten Appetit!")
-#     else:
-#         print("Warten...")
+if apfel_ist_reif:
+    if apfel_ist_faul:
+        print("Wegwerfen!")
+    elif apfel_ist_reif:
+        print("Guten Appetit!")
+    else:
+        print("Warten...")
 
 
 # Daniels Lösung
 
-# ist_reif = False
-# ist_faul = True
+ist_reif = False
+ist_faul = True
 
-# if ist_reif:
-#     if ist_faul:
-#         print("Wegwerfen!")
-#     else:
-#         print("Guten Appetit!")
-# else:
-#     print("Warten...")
+if ist_reif:
+    if ist_faul:
+        print("Wegwerfen!")
+    else:
+        print("Guten Appetit!")
+else:
+    print("Warten...")
 
 # ==============================================================================
