@@ -10,11 +10,11 @@
 
 # Lösung
 
-# def verdopple_zahl(zahl):
-#     antwort = zahl * 2
-#     print(f"Das Doppelte von {zahl} ist {antwort}")
+def verdopple_zahl(zahl):
+    antwort = zahl * 2
+    print(f"Das Doppelte von {zahl} ist {antwort}")
 
-# verdopple_zahl(5)
+verdopple_zahl(5)
 
 
 # ==============================================================================
@@ -31,13 +31,13 @@
 
 # Lösung
 
-# def pruefe_note(punkte):
-#     if punkte >=50:
-#         print("Bestanden")
-#     else:
-#         print("Leider nicht bestanden.")
+def pruefe_note(punkte):
+    if punkte >=50:
+        print("Bestanden")
+    else:
+        print("Leider nicht bestanden.")
 
-# pruefe_note(49)
+pruefe_note(49)
 
 # ==============================================================================
 
@@ -53,15 +53,15 @@
 
 # Lösung
 
-# def zeige_kleinere(zahl1, zahl2):
-#     if zahl1 < zahl2:
-#         print(f"Die kleinere Zahl ist {zahl1}.")
-#     elif zahl1 > zahl2:
-#         print(f"Die kleinere Zahl ist {zahl2}.")
-#     else:
-#         print("Die beiden Zahlen sind gleich groß.")
+def zeige_kleinere(zahl1, zahl2):
+    if zahl1 < zahl2:
+        print(f"Die kleinere Zahl ist {zahl1}.")
+    elif zahl1 > zahl2:
+        print(f"Die kleinere Zahl ist {zahl2}.")
+    else:
+        print("Die beiden Zahlen sind gleich groß.")
 
-# zeige_kleinere(6,6)
+zeige_kleinere(6,6)
 
 # ==============================================================================
 
@@ -85,13 +85,13 @@
 
 # Lösung
 
-# def ist_supersportwagen(ps, beschleunigung):
-#     if ps >=500 and beschleunigung <4.0:
-#         return True
-#     else:
-#         return False
+def ist_supersportwagen(ps, beschleunigung):
+    if ps >=500 and beschleunigung <4.0:
+        return True
+    else:
+        return False
 
-# ist_supersportwagen(500,4.0)
+ist_supersportwagen(500,4.0)
 
 # ==============================================================================
 
@@ -122,23 +122,23 @@
 
 # Lösung
 
-# def einkauf_berechnen(preise, budget):
-#     preise_budget = []
-#     for i in range(len(preise)):
-#         if preise[i] <=50:
-#             preise_budget.append(preise[i])
+def einkauf_berechnen(preise, budget):
+    preise_budget = []
+    for i in range(len(preise)):
+        if preise[i] <=50:
+            preise_budget.append(preise[i])
 
-#     summe = sum(preise_budget)
+    summe = sum(preise_budget)
             
 
-#     if summe <= budget:
-#         print("Einkauf erfolgreich!")
-#     else:
-#         print("Budget überschritten!")
+    if summe <= budget:
+        print("Einkauf erfolgreich!")
+    else:
+        print("Budget überschritten!")
 
-# preise = [10.50, 120.00, 25.00, 5.99, 65.00, 8.50]
-# budget = 50
-# einkauf_berechnen(preise,budget)
+preise = [10.50, 120.00, 25.00, 5.99, 65.00, 8.50]
+budget = 50
+einkauf_berechnen(preise,budget)
 
 # ==============================================================================
 
