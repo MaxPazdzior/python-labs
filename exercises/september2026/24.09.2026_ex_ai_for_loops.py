@@ -6,15 +6,15 @@
 
 # Lösung
 
-# text = "Geheimcode2026"
-# neuer_text = ""
+text = "Geheimcode2026"
+neuer_text = ""
 
-# for i in text:
-#     if i in "0123456789":
-#         neuer_text += ""
-#     else:
-#         neuer_text += i
-# print(neuer_text)
+for i in text:
+    if i in "0123456789":
+        neuer_text += ""
+    else:
+        neuer_text += i
+print(neuer_text)
 
 # ==============================================================================
 
@@ -24,17 +24,17 @@
 
 # Lösung
 
-# text = "Xylophon und Zebra"
-# neuer_text = ""
+text = "Xylophon und Zebra"
+neuer_text = ""
 
-# for i in text:
-#     if i in "Xx":
-#         neuer_text += "A"
-#     elif i in "Zz":
-#         neuer_text += "B"
-#     else:
-#         neuer_text += i
-# print(neuer_text)
+for i in text:
+    if i in "Xx":
+        neuer_text += "A"
+    elif i in "Zz":
+        neuer_text += "B"
+    else:
+        neuer_text += i
+print(neuer_text)
 
 # =====================================================================
 
@@ -43,13 +43,13 @@
 # Tipp: Starte bei 0 und rechne bei jedem Treffer "+= 1".
 
 
-# text = "PythonProgramm"
-# zahl = 0
+text = "PythonProgramm"
+zahl = 0
 
-# for i in text:
-#     if i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
-#         zahl += 1
-# print(f"Es sind {zahl} Großbuchstaben im Text!")
+for i in text:
+    if i in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        zahl += 1
+print(f"Es sind {zahl} Großbuchstaben im Text!")
 
 # =====================================================================
 
@@ -57,21 +57,21 @@
 # Ziel: Ersetze jedes "A" durch "O", jedes "a" durch "o", jedes "O" 
 # durch "A" und jedes "o" durch "a". Alle anderen Zeichen bleiben normal.
 
-# text = "Oma fährt Auto"
-# neuer_text = ""
+text = "Oma fährt Auto"
+neuer_text = ""
 
-# for i in text:
-#     if i in "A":
-#         neuer_text += "O"
-#     elif i in "a":
-#         neuer_text += "o"
-#     elif i in "O":
-#         neuer_text += "A"
-#     elif i in "o":
-#         neuer_text += "a"
-#     else:
-#         neuer_text += i
-# print(neuer_text)
+for i in text:
+    if i in "A":
+        neuer_text += "O"
+    elif i in "a":
+        neuer_text += "o"
+    elif i in "O":
+        neuer_text += "A"
+    elif i in "o":
+        neuer_text += "a"
+    else:
+        neuer_text += i
+print(neuer_text)
 
 
 # =====================================================================
@@ -79,28 +79,28 @@
 # Ziel: Wenn ein Buchstabe direkt doppelt hintereinander vorkommt, 
 # soll der zweite Buchstabe durch ein "X" ersetzt werden.
 
-# text = "Hallo"
-# neuer_text = ""
-# letzer_buchstabe = ""
+text = "Hallo"
+neuer_text = ""
+letzer_buchstabe = ""
 
-# for i in text:
-#     if i == letzer_buchstabe:
-#         neuer_text += "X"
-#     else: neuer_text += i
-#     letzer_buchstabe = i
-# print(neuer_text)
+for i in text:
+    if i == letzer_buchstabe:
+        neuer_text += "X"
+    else: neuer_text += i
+    letzer_buchstabe = i
+print(neuer_text)
 
 # =====================================================================
 # AUFGABE 6: Der Wort-Zähler
 # Ziel: Zähle, wie viele Wörter in dem Satz stecken.
 
-# text = "Ich lerne gerade Python Programmieren"
-# wort = 1
+text = "Ich lerne gerade Python Programmieren"
+wort = 1
 
-# for i in text:
-#     if i in " ":
-#         wort += 1
-# print(f"Es sind {wort} Wörter im Satz")
+for i in text:
+    if i in " ":
+        wort += 1
+print(f"Es sind {wort} Wörter im Satz")
 
 # =====================================================================
 
@@ -128,33 +128,33 @@
 
 # Lösung
 
-# while True:
-#     eingabe = input("Gib ein, wohin der Roboter fahren soll (L,R) oder gib exit ein um zu beenden\n")
+while True:
+    eingabe = input("Gib ein, wohin der Roboter fahren soll (L,R) oder gib exit ein um zu beenden\n")
 
-#     if eingabe == "exit":
-#         print("Bis Bald!")
-#         break
+    if eingabe == "exit":
+        print("Bis Bald!")
+        break
 
-#     position = 0
-#     gültig = True
+    position = 0
+    gültig = True
 
-#     for i in eingabe:
-#         if i == "R":
-#             position +=1
-#         elif i == "L":
-#             position -=1
+    for i in eingabe:
+        if i == "R":
+            position +=1
+        elif i == "L":
+            position -=1
 
-#         if position < 0:
-#             print("Absturz gegen die Wand gefahren!")
-#             gültig = False
-#             break
+        if position < 0:
+            print("Absturz gegen die Wand gefahren!")
+            gültig = False
+            break
 
-#     if gültig and position !=0:
-#         print("Ungültig: Roboter steht nicht an der Basis!")
-#         gültig = False
+    if gültig and position !=0:
+        print("Ungültig: Roboter steht nicht an der Basis!")
+        gültig = False
 
-#     if gültig:
-#         print("Route erfolgreich beendet!")
+    if gültig:
+        print("Route erfolgreich beendet!")
 
 # =====================================================================
 
@@ -186,36 +186,36 @@
 
 # Lösung
 
-# while True:
-#     eingabe = input("Gib ein in welches Stockwerk du fahren möchtest (U,D) oder drücke exit wenn du den Fahrstuhl verlassen willst!\n")
+while True:
+    eingabe = input("Gib ein in welches Stockwerk du fahren möchtest (U,D) oder drücke exit wenn du den Fahrstuhl verlassen willst!\n")
 
-#     if eingabe == "exit":
-#         print("Auf Wiedersehen!")
-#         break
+    if eingabe == "exit":
+        print("Auf Wiedersehen!")
+        break
 
-#     position = 0
-#     gültig = True
+    position = 0
+    gültig = True
 
-#     for i in eingabe:
-#         if i == "U":
-#             position += 1
-#         elif i == "D":
-#             position -= 1
+    for i in eingabe:
+        if i == "U":
+            position += 1
+        elif i == "D":
+            position -= 1
 
-#         if position <0:
-#             print("Fehler! Der Fahrstuhl kann nicht in den Boden fahren!")
-#             gültig = False
-#             break
-#         elif position >5:
-#             print("Fehler: Der Fahrstuhl ist durchs Dach geschossen!")
-#             gültig = False
-#             break
+        if position <0:
+            print("Fehler! Der Fahrstuhl kann nicht in den Boden fahren!")
+            gültig = False
+            break
+        elif position >5:
+            print("Fehler: Der Fahrstuhl ist durchs Dach geschossen!")
+            gültig = False
+            break
 
-#     if position !=0 and gültig:
-#         print("Ungültig! Der Fahrstuhl steht nicht im Erdgeschoss!")
-#         gültig = False
+    if position !=0 and gültig:
+        print("Ungültig! Der Fahrstuhl steht nicht im Erdgeschoss!")
+        gültig = False
 
-#     if gültig:
-#         print("Fahrstuhl Fahrt erfolgreich!")
+    if gültig:
+        print("Fahrstuhl Fahrt erfolgreich!")
 
 # =====================================================================
