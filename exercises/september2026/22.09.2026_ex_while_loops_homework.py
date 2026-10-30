@@ -15,22 +15,22 @@
 
 # Lösung
 
-# summe = 20
+summe = 20
 
-# while True:
-#     eingabe = int(input("Bitte geben Sie an, wie viele Tickets Sie kaufen möchten.\n"))
+while True:
+    eingabe = int(input("Bitte geben Sie an, wie viele Tickets Sie kaufen möchten.\n"))
     
-#     if eingabe <= 0:
-#         print("Ungültige Ticketanzahl! Versuchen Sie es noch einmal!")
-#     elif eingabe <= summe:
-#         summe -= eingabe
-#         print("Dein Kauf war erfolgreich!")
+    if eingabe <= 0:
+        print("Ungültige Ticketanzahl! Versuchen Sie es noch einmal!")
+    elif eingabe <= summe:
+        summe -= eingabe
+        print("Dein Kauf war erfolgreich!")
         
-#         if summe == 0:
-#             print("Ausverkauft! Der Kinosaal ist nun voll!")
-#             break
-#     else:
-#         print(f"So viele Sitze haben wir nicht mehr. Wir haben noch {summe} freie Sitze!")
+        if summe == 0:
+            print("Ausverkauft! Der Kinosaal ist nun voll!")
+            break
+    else:
+        print(f"So viele Sitze haben wir nicht mehr. Wir haben noch {summe} freie Sitze!")
 
 
 
