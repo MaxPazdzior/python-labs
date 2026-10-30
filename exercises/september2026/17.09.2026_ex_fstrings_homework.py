@@ -17,18 +17,18 @@
 
 # Lösung
 
-# ticket = input("Willkommen. Bitte gib deine Ticketklasse ein (economy/business)\n").lower()
-# gewicht = int(input("Nun gib bitte das Gewicht deinen Koffers in KG an.\n"))
-# extra_kosten = 0.0
+ticket = input("Willkommen. Bitte gib deine Ticketklasse ein (economy/business)\n").lower()
+gewicht = int(input("Nun gib bitte das Gewicht deinen Koffers in KG an.\n"))
+extra_kosten = 0.0
 
-# if ticket == "economy":
-#     if gewicht > 20:
-#         extra_kosten = (gewicht - 20) * 5.0
-# elif ticket == "business":
-#     if gewicht > 30:
-#         extra_kosten = (gewicht - 30) * 8.0
+if ticket == "economy":
+    if gewicht > 20:
+        extra_kosten = (gewicht - 20) * 5.0
+elif ticket == "business":
+    if gewicht > 30:
+        extra_kosten = (gewicht - 30) * 8.0
 
-# print(f"In der {ticket}-Klasse kostet dein {gewicht}KG Koffer {extra_kosten:.2f}€ extra.")
+print(f"In der {ticket}-Klasse kostet dein {gewicht}KG Koffer {extra_kosten:.2f}€ extra.")
 
 # ==============================================================================
 
