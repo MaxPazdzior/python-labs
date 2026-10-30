@@ -8,12 +8,12 @@
 
 # Lösung
 
-# preise = [25.00, 65.00, 120.00, 45.00, 55.00, 10.00]
+preise = [25.00, 65.00, 120.00, 45.00, 55.00, 10.00]
 
-# for i in range(len(preise)):
-#     if preise[i] > 50.0:
-#         preise[i] -= 10.0
-# print(f"Die akutallisiert Liste ist: {preise}")
+for i in range(len(preise)):
+    if preise[i] > 50.0:
+        preise[i] -= 10.0
+print(f"Die akutallisiert Liste ist: {preise}")
 
 # ==============================================================================
 
@@ -29,21 +29,21 @@
 
 # Lösung
 
-# schritte = [7500, 8200, 8200, 6100, 10500, 9800, 11000]
+schritte = [7500, 8200, 8200, 6100, 10500, 9800, 11000]
 
-# for i in range(1,len(schritte)):
-#     aktuelle_schritte = schritte[i]
-#     vortags_schritte = schritte[i-1]
-#     differenz = aktuelle_schritte - vortags_schritte
+for i in range(1,len(schritte)):
+    aktuelle_schritte = schritte[i]
+    vortags_schritte = schritte[i-1]
+    differenz = aktuelle_schritte - vortags_schritte
 
-#     tag = i + 1
+    tag = i + 1
 
-#     if differenz > 0:
-#         print(f"Tag {tag}: Zielstrebig! (+{differenz} Schritte!)")
-#     elif differenz < 0:
-#         print(f"Tag {tag}: Weniger bewegung als gestern!")
-#     else:
-#         print(f"Tag {tag}: Exakt dieselbe Schrittzahl.")
+    if differenz > 0:
+        print(f"Tag {tag}: Zielstrebig! (+{differenz} Schritte!)")
+    elif differenz < 0:
+        print(f"Tag {tag}: Weniger bewegung als gestern!")
+    else:
+        print(f"Tag {tag}: Exakt dieselbe Schrittzahl.")
 
 # ==============================================================================
 
@@ -66,25 +66,25 @@
 
 # Lösung
 
-# temperaturen = [21.5, 22.0, 24.5, 24.5, 26.0, 23.5, 24.0]
+temperaturen = [21.5, 22.0, 24.5, 24.5, 26.0, 23.5, 24.0]
 
-# warnung = 0
+warnung = 0
 
-# for i in range(1,len(temperaturen)):
-#     aktuelle_temp = temperaturen[i]
-#     alte_temp = temperaturen[i-1]
-#     differenz = aktuelle_temp - alte_temp
+for i in range(1,len(temperaturen)):
+    aktuelle_temp = temperaturen[i]
+    alte_temp = temperaturen[i-1]
+    differenz = aktuelle_temp - alte_temp
 
-#     if differenz >0:
-#         if differenz >2:
-#             warnung +=1 
-#             print(f"Stunde {i}: Warnung! Schneller Temperaturanstieg! (+{differenz}°C)")
-#         elif differenz <2:
-#             print(f"Stunde {i}: Temperatur steigt leicht. +{differenz}°C")
-#     elif differenz <0:
-#         print(f"Stunde {i}: Kühlung läuft.")
-#     else:
-#         print(f"Stunde {i}: Temperatur Stabil.")
-# print(f"Gesamtzahl Warnungen: {warnung}")
+    if differenz >0:
+        if differenz >2:
+            warnung +=1 
+            print(f"Stunde {i}: Warnung! Schneller Temperaturanstieg! (+{differenz}°C)")
+        elif differenz <2:
+            print(f"Stunde {i}: Temperatur steigt leicht. +{differenz}°C")
+    elif differenz <0:
+        print(f"Stunde {i}: Kühlung läuft.")
+    else:
+        print(f"Stunde {i}: Temperatur Stabil.")
+print(f"Gesamtzahl Warnungen: {warnung}")
 
 # ==============================================================================
