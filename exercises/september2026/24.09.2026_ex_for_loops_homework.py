@@ -9,16 +9,16 @@
 
 # Lösung
 
-# wort = "Erbdbeere"
-# vokale = "EeAa"
-# neues_wort = ""
+wort = "Erbdbeere"
+vokale = "EeAa"
+neues_wort = ""
 
-# for i in wort:
-#     if i in vokale:
-#         neues_wort += "*"
-#     else:
-#         neues_wort += i
-# print(f"Altes Wort: {wort}\nNeues Wort: {neues_wort}")
+for i in wort:
+    if i in vokale:
+        neues_wort += "*"
+    else:
+        neues_wort += i
+print(f"Altes Wort: {wort}\nNeues Wort: {neues_wort}")
 
 
 # ==============================================================================
