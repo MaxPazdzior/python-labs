@@ -6,10 +6,10 @@
 
 # Lösung
 
-# a = 10
-# while a >0:
-#     print(a)
-#     a -=2
+a = 10
+while a >0:
+    print(a)
+    a -=2
 
 # ==============================================================================
 
@@ -19,13 +19,13 @@
 
 # Lösung
 
-# zahl = 30
-# summe = 0
-# while zahl >= 1:
-#     if zahl % 2 == 0 and zahl % 3 == 0:
-#         summe += 1
-#     zahl -= 1
-# print(f"Zwischen 1 und 30 sind genau: {summe} Zahlen durch 2 und 3 glatt teilbar!")    
+zahl = 30
+summe = 0
+while zahl >= 1:
+    if zahl % 2 == 0 and zahl % 3 == 0:
+        summe += 1
+    zahl -= 1
+print(f"Zwischen 1 und 30 sind genau: {summe} Zahlen durch 2 und 3 glatt teilbar!")    
 
 # ==============================================================================
 
