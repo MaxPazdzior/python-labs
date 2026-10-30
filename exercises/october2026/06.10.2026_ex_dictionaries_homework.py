@@ -4,14 +4,14 @@
  
 # Gegeben ist ein Dictionary, das die Daten eines Laptops beschreibt:
  
-# laptop = {
-#     "marke": "Dell",
-#     "modell": "Inspiron 15",
-#     "preis": 799.00,
-#     "ram_gb": 16
-# }
+laptop = {
+    "marke": "Dell",
+    "modell": "Inspiron 15",
+    "preis": 799.00,
+    "ram_gb": 16
+}
 
-# print(laptop)
+print(laptop)
 
 # # 1. Ändern Sie den Preis auf 849.99.
 # # 2. Fügen Sie ein neues Schlüssel-Wert-Paar hinzu: "betriebssystem": "Windows 11".
@@ -19,16 +19,16 @@
 
 # # Lösung
 
-# # 1.
-# laptop["preis"] = 849.99
-# print(laptop)
+# 1.
+laptop["preis"] = 849.99
+print(laptop)
 
-# # 2.
-# laptop["betriebssystem"] = "Windows 11"
-# print(laptop)
+# 2.
+laptop["betriebssystem"] = "Windows 11"
+print(laptop)
 
-# # 3.
-# print(laptop["marke"])
+# 3.
+print(laptop["marke"])
 
 # ==============================================================================
 
@@ -36,26 +36,26 @@
  
 # Sie haben ein Dictionary mit Namen und Telefonnummern.
  
-# telefonbuch = {
-#     "Anna": "030-123456",
-#     "Ben": "040-987654",
-#     "Clara": "030-555666",
-#     "Daniel": "089-112233"
-# }
+telefonbuch = {
+    "Anna": "030-123456",
+    "Ben": "040-987654",
+    "Clara": "030-555666",
+    "Daniel": "089-112233"
+}
 
-# print(telefonbuch)
+print(telefonbuch)
  
 # # Schreiben Sie ein Programm, das alle Personen herausfiltert und in einer Liste speichert, 
 # # deren Telefonnummer mit der Vorwahl 030 (Berlin) beginnt.
 
 # # Lösung
 
-# nummern_liste = []
+nummern_liste = []
 
-# for name, nummer in telefonbuch.items():
-#     if nummer.startswith("030"):
-#         nummern_liste.append([name,nummer])
-# print(f" Folgende Personen, haben die Vorwahl: 030: {nummern_liste}")
+for name, nummer in telefonbuch.items():
+    if nummer.startswith("030"):
+        nummern_liste.append([name,nummer])
+print(f" Folgende Personen, haben die Vorwahl: 030: {nummern_liste}")
 
 # ==============================================================================
 
@@ -68,18 +68,18 @@
 
 # Lösung
 
-# text = "Python ist super".lower()
-# text_dict = {}
+text = "Python ist super".lower()
+text_dict = {}
 
-# for buchstabe in text:
-#     if buchstabe == " ":
-#         continue
-#     if buchstabe not in text_dict:
-#         text_dict[buchstabe] = 1
-#     else:
-#         text_dict[buchstabe] += 1
+for buchstabe in text:
+    if buchstabe == " ":
+        continue
+    if buchstabe not in text_dict:
+        text_dict[buchstabe] = 1
+    else:
+        text_dict[buchstabe] += 1
 
-# print(text_dict)
+print(text_dict)
 
 # ==============================================================================
 
