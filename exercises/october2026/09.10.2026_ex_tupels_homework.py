@@ -16,16 +16,16 @@
 
 # Lösung
 
-# def berechne_statistik(zahlen_liste):
-#     summe = sum(zahlen_liste)
-#     anzahl = len(zahlen_liste)
-#     durchschnitt = summe / anzahl
-#     return summe, anzahl, durchschnitt
+def berechne_statistik(zahlen_liste):
+    summe = sum(zahlen_liste)
+    anzahl = len(zahlen_liste)
+    durchschnitt = summe / anzahl
+    return summe, anzahl, durchschnitt
 
-# zahlen_liste = [10,20,30,40]
-# summe, anzahl, durchschnitt = berechne_statistik(zahlen_liste)
-# print(f"Die Werte sind: ", berechne_statistik(zahlen_liste))
-# print(f"\nDie Summe aller Zahlen ist: {summe}\nDie Anzahl der Zahlen in der Liste ist: {anzahl}\nDer Durchschnitt aller Zahlen in der Liste ist: {durchschnitt}")
+zahlen_liste = [10,20,30,40]
+summe, anzahl, durchschnitt = berechne_statistik(zahlen_liste)
+print(f"Die Werte sind: ", berechne_statistik(zahlen_liste))
+print(f"\nDie Summe aller Zahlen ist: {summe}\nDie Anzahl der Zahlen in der Liste ist: {anzahl}\nDer Durchschnitt aller Zahlen in der Liste ist: {durchschnitt}")
 
 # ==============================================================================
 
@@ -41,35 +41,35 @@
 # 2. Berechne den durchschnittlichen Score aller Spieler auf dem Leaderboard.
  
 # Gegebene Datenstruktur: Liste von Tupeln (Name, Level, Score)
-# leaderboard = [
-#     ("CyberKnight", 45, 12500), 
-#     ("PixelQueen", 50, 15200), 
-#     ("ShadowGamer", 32, 8900), 
-#     ("NoobMaster", 12, 1500)
-# ]
+leaderboard = [
+    ("CyberKnight", 45, 12500), 
+    ("PixelQueen", 50, 15200), 
+    ("ShadowGamer", 32, 8900), 
+    ("NoobMaster", 12, 1500)
+]
 
 # Lösung
 
-# spielernamen = []
-# score_sammler = []
+spielernamen = []
+score_sammler = []
 
-# leaderboard = [
-#      ("CyberKnight", 45, 12500), 
-#      ("PixelQueen", 50, 15200), 
-#      ("ShadowGamer", 32, 8900), 
-#      ("NoobMaster", 12, 1500)
-# ]
+leaderboard = [
+     ("CyberKnight", 45, 12500), 
+     ("PixelQueen", 50, 15200), 
+     ("ShadowGamer", 32, 8900), 
+     ("NoobMaster", 12, 1500)
+]
 
-# for namen, level, score in leaderboard:
-#     if level >=40:
-#         spielernamen.append(namen)
-#     score_sammler.append(score)
+for namen, level, score in leaderboard:
+    if level >=40:
+        spielernamen.append(namen)
+    score_sammler.append(score)
 
-# durchschnitt = sum(score_sammler) / len(score_sammler)
+durchschnitt = sum(score_sammler) / len(score_sammler)
 
     
-# print(f"Die Namen aller Spieler mit Level 40 oder höher sind: {spielernamen}")
-# print(f"\nDer Durchschnittsscore aller Spieler ist: {durchschnitt}")
+print(f"Die Namen aller Spieler mit Level 40 oder höher sind: {spielernamen}")
+print(f"\nDer Durchschnittsscore aller Spieler ist: {durchschnitt}")
 
 # ==============================================================================
 
@@ -97,22 +97,22 @@
 
 # Lösung
 
-# wetter_daten = {
-#     (52.5,13.4): {"Temperatur": 18.5},
-#     (48.1,11.5): {"Temperatur": 21.0},
-#     (53.5,10.0): {"Temperatur": 14.2}
-# }
+wetter_daten = {
+    (52.5,13.4): {"Temperatur": 18.5},
+    (48.1,11.5): {"Temperatur": 21.0},
+    (53.5,10.0): {"Temperatur": 14.2}
+}
 
-# def wetter_check(datenbank, lat, lon):
-#     koordinate = (lat, lon)
-#     if koordinate in datenbank:
-#         print(f"Station bekannt. Temperatur: {datenbank[koordinate]["Temperatur"]} °C")
-#     else:
-#         datenbank[koordinate]={"Temperatur": 0.0}
-#         print("Neue Station registriert. Start-Temperatur auf 0.0 °C gesetzt.")            
+def wetter_check(datenbank, lat, lon):
+    koordinate = (lat, lon)
+    if koordinate in datenbank:
+        print(f"Station bekannt. Temperatur: {datenbank[koordinate]["Temperatur"]} °C")
+    else:
+        datenbank[koordinate]={"Temperatur": 0.0}
+        print("Neue Station registriert. Start-Temperatur auf 0.0 °C gesetzt.")            
 
-# wetter_check(wetter_daten, 52.5,13.5)
-# print(wetter_daten)
+wetter_check(wetter_daten, 52.5,13.5)
+print(wetter_daten)
 
 # ==============================================================================
 
