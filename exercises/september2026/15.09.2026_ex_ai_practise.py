@@ -24,19 +24,19 @@
 
 # Lösung
 
-# input("Willkommen bei deinem Firmen-Juniläums-Rechner! Drücke Enter zum starten\n")
+input("Willkommen bei deinem Firmen-Juniläums-Rechner! Drücke Enter zum starten\n")
 
-# dienstjahr = int(input("Bitte gib an, Wie viele Dienstjahre du schon im Unternehmen arbeitest.\n"))
+dienstjahr = int(input("Bitte gib an, Wie viele Dienstjahre du schon im Unternehmen arbeitest.\n"))
 
-# if dienstjahr % 25 == 0:
-#     print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Goldbonus.\n500€ werden dir gutgeschrieben.")
-# elif dienstjahr % 10 == 0:
-#     print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Silberbonus.\n250€ werden dir gutgeschrieben.")
-# elif dienstjahr % 5 == 0:
-#     print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Bronzebonus.\n100€ werden dir gutgeschrieben.")
-# else:
-#     print("\nLeider bekommst du keinen Bonus von uns. Häng dich weiter rein!")
+if dienstjahr % 25 == 0:
+    print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Goldbonus.\n500€ werden dir gutgeschrieben.")
+elif dienstjahr % 10 == 0:
+    print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Silberbonus.\n250€ werden dir gutgeschrieben.")
+elif dienstjahr % 5 == 0:
+    print("\nDa du bereits seit",dienstjahr,"Dienstjahren bei uns arbeitest, erhälst du den Bronzebonus.\n100€ werden dir gutgeschrieben.")
+else:
+    print("\nLeider bekommst du keinen Bonus von uns. Häng dich weiter rein!")
 
-# input("\nFertig! Drücke Enter zum beenden!")
+input("\nFertig! Drücke Enter zum beenden!")
 
 # ==============================================================================
