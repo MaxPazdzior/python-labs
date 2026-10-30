@@ -8,30 +8,30 @@
 # das Maximum von 40.0 Grad.
 
 # Lösung
-# Variante 1: Zählschleife
+Variante 1: Zählschleife
 
-# temperaturen = [24.5, 42.1, 23.8, 55.0, 25.2, 40.0]
+temperaturen = [24.5, 42.1, 23.8, 55.0, 25.2, 40.0]
 
-# for i in range (len(temperaturen)):
-#     if temperaturen[i] >40.0:
-#         print(f"Ausreißer gefunden bei Index {i} ({temperaturen[i]}°C) --> Korrigiert!")
-#         temperaturen[i] = 40.0
-# print("Bereinigte Temperaturen:", temperaturen)
+for i in range (len(temperaturen)):
+    if temperaturen[i] >40.0:
+        print(f"Ausreißer gefunden bei Index {i} ({temperaturen[i]}°C) --> Korrigiert!")
+        temperaturen[i] = 40.0
+print("Bereinigte Temperaturen:", temperaturen)
 
 # ==============================================================================
 
 #Variante 2: Elementschleife, Ohne Index-Zugriff 
 
-# temperaturen = [24.5, 42.1, 23.8, 55.0, 25.2, 40.0]
-# temperaturen_fixed = []
+temperaturen = [24.5, 42.1, 23.8, 55.0, 25.2, 40.0]
+temperaturen_fixed = []
 
-# for temperatur in temperaturen:
-#     if temperatur > 40.0:
-#         temperaturen_fixed.append(40.0)
-#     else:
-#         temperaturen_fixed.append(temperatur)
+for temperatur in temperaturen:
+    if temperatur > 40.0:
+        temperaturen_fixed.append(40.0)
+    else:
+        temperaturen_fixed.append(temperatur)
 
-# print("Bereinigte Temperaturen (Variante 2): ", temperaturen_fixed)
+print("Bereinigte Temperaturen (Variante 2): ", temperaturen_fixed)
 
 # ==============================================================================
 
@@ -39,23 +39,23 @@
 
 # Variante 1: Der klassische Weg (Index)
 
-# produkte = ["Kaffee", "Muffin", "Apfel"]
-# preise = [3.50, 2.20, 0.80]
+produkte = ["Kaffee", "Muffin", "Apfel"]
+preise = [3.50, 2.20, 0.80]
 
-# print("\n--- Kassenbon ---")
-# for i in range(len(preise)):
-#     print(f"- {produkte[i]:10}: {preise[i]:.2f}€")      # --> :10 bedeutet, dass der abstand in der Konsole 10 Zeichen Abstand hat. --> :.f bedeutet 2 stellen nach dem Komma werden angezeigt.
+print("\n--- Kassenbon ---")
+for i in range(len(preise)):
+    print(f"- {produkte[i]:10}: {preise[i]:.2f}€")      # --> :10 bedeutet, dass der abstand in der Konsole 10 Zeichen Abstand hat. --> :.f bedeutet 2 stellen nach dem Komma werden angezeigt.
 
 # ==============================================================================
 
 # Variante 2: Elementschleife - zip()
 
-# produkte = ["Kaffee", "Muffin", "Apfel"]
-# preise = [3.50, 2.20, 0.80]
+produkte = ["Kaffee", "Muffin", "Apfel"]
+preise = [3.50, 2.20, 0.80]
 
-# print("\n--- Kassenbon ---")
-# for produkt, preis in zip(produkte, preise):
-#     print(f"- {produkt:10}: {preis:.2f}€")
+print("\n--- Kassenbon ---")
+for produkt, preis in zip(produkte, preise):
+    print(f"- {produkt:10}: {preis:.2f}€")
 
 # ==============================================================================
 
