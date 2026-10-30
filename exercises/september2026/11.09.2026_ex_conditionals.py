@@ -15,29 +15,29 @@
 
 # Meine Lösung: (Kann man so machen muss man aber nicht da es zu viel ist.)
 
-# temperatur = 8
+temperatur = 8
 
-# if temperatur <0:
-#     print("Ziehe eine dicke Winterjacke an!")
-# elif temperatur >=0 and temperatur <=15:
-#     print("Ein warmer Pullover reicht heute.")
-# elif temperatur >=16 and temperatur <=25:
-#     print("Ein T-Shirt und eine leichte Jacke sind heute perfekt.")
-# elif temperatur >25:
-#     print("Es ist zu heiß. Ein T-Shirt und Shorts reichen heute aus.")
+if temperatur <0:
+    print("Ziehe eine dicke Winterjacke an!")
+elif temperatur >=0 and temperatur <=15:
+    print("Ein warmer Pullover reicht heute.")
+elif temperatur >=16 and temperatur <=25:
+    print("Ein T-Shirt und eine leichte Jacke sind heute perfekt.")
+elif temperatur >25:
+    print("Es ist zu heiß. Ein T-Shirt und Shorts reichen heute aus.")
 
 # Daniels Lösung:
 
-# temperatur = 15
+temperatur = 15
 
-# if  temperatur < 0:
-#     print("Zieh eine dicke Winderjacke an!")
-# elif temperatur <= 15:
-#     print("Ein warmer Pullover reicht.")
-# elif temperatur <= 25:
-#     print("Ein T-Shirt und eine leichte Jacke.")
-# else:
-#     print("Es ist heiß! T-Shirt und Shorts reichen.")
+if  temperatur < 0:
+    print("Zieh eine dicke Winderjacke an!")
+elif temperatur <= 15:
+    print("Ein warmer Pullover reicht.")
+elif temperatur <= 25:
+    print("Ein T-Shirt und eine leichte Jacke.")
+else:
+    print("Es ist heiß! T-Shirt und Shorts reichen.")
 
 # ==============================================================================
 
@@ -62,18 +62,18 @@
 
 # Meine Lösung: (Daniel hat die selbe Lösung)
 
-# punkte = 59
+punkte = 59
 
-# if punkte >=90:
-#     print("Sehr gut!")
-# elif punkte >=80:
-#     print("Gut!")
-# elif punkte >=70:
-#     print("Befriedigend!")
-# elif punkte >=60:
-#     print("Ausreichend!")
-# else:
-#     print("Leider nicht bestanden!")
+if punkte >=90:
+    print("Sehr gut!")
+elif punkte >=80:
+    print("Gut!")
+elif punkte >=70:
+    print("Befriedigend!")
+elif punkte >=60:
+    print("Ausreichend!")
+else:
+    print("Leider nicht bestanden!")
 
 # ==============================================================================
 
