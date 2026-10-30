@@ -1,7 +1,7 @@
 # Python Labs
 
 ![Python](https://img.shields.io/badge/Python-3.x_(Latest)-3776AB?style=flat-square&logo=python&logoColor=white)
-![IDE](https://img.shields.io/badge/IDE-Visual_Studio-5C2D91?style=flat-square&logo=visualstudio&logoColor=white)
+![IDE](https://img.shields.io/badge/IDE-VS_Code-007ACC?style=flat-square&logo=visualstudiocode&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 
 Python programming exercises, algorithms, and coursework projects from my software development training.
