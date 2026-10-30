@@ -10,26 +10,26 @@
 
 # Lösung:
 
-# while True:
-#     zahl = input("Errate die Geheime Zahl. Gib eine Zahl deiner Wahl ein: (0-10)\n")
-#     if zahl == "7":
-#         print("Herzlichen Glückwunsch! Du hast die geheime Zahl erraten")
-#         break
-#     else:
-#         print("Falsch geraten. Mach weiter um die geheime Zahl zu finden!")
+while True:
+    zahl = input("Errate die Geheime Zahl. Gib eine Zahl deiner Wahl ein: (0-10)\n")
+    if zahl == "7":
+        print("Herzlichen Glückwunsch! Du hast die geheime Zahl erraten")
+        break
+    else:
+        print("Falsch geraten. Mach weiter um die geheime Zahl zu finden!")
 
 
 # Daniels Lösung
 
-# geheimnis = 7
-# tipp = 0
+geheimnis = 7
+tipp = 0
 
-# while tipp != geheimnis:
-#     tipp = int(input("Rate die Gehimzahl (zwischen 1 und 10): "))
+while tipp != geheimnis:
+    tipp = int(input("Rate die Gehimzahl (zwischen 1 und 10): "))
 
-#     if tipp == geheimnis:
-#         print("Glückwunsch! Richtig erraten!")
-#     else:
-#         print("Falsch geraten! Versuche es noch einmal.\n")
+    if tipp == geheimnis:
+        print("Glückwunsch! Richtig erraten!")
+    else:
+        print("Falsch geraten! Versuche es noch einmal.\n")
 
 # ==============================================================================
