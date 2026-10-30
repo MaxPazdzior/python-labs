@@ -11,10 +11,10 @@
 
 # Lösung
 
-# a = 1
-# while a <= 100:
-#     print(a)
-#     a *= 2
+a = 1
+while a <= 100:
+    print(a)
+    a *= 2
 
 # ==============================================================================
 
@@ -32,14 +32,14 @@
 
 # Lösung
 
-# zahl = 1
-# gesamtsumme = 0
+zahl = 1
+gesamtsumme = 0
 
-# while zahl <=40:
-#     if zahl % 4 == 0 and zahl % 8 != 0:
-#         gesamtsumme += zahl
-#     zahl += 1
-# print(gesamtsumme)
+while zahl <=40:
+    if zahl % 4 == 0 and zahl % 8 != 0:
+        gesamtsumme += zahl
+    zahl += 1
+print(gesamtsumme)
 
 # ==============================================================================
 
@@ -54,13 +54,13 @@
 
 # Lösung
 
-# while True:
-#     pin = input("Bitte gib den gültigen Pin ein:\n")
-#     if pin == "1234":
-#         print("Zugriff gewährt!")
-#         break
-#     else:
-#         print("Falscher Pin, versuch es nochmal!")
+while True:
+    pin = input("Bitte gib den gültigen Pin ein:\n")
+    if pin == "1234":
+        print("Zugriff gewährt!")
+        break
+    else:
+        print("Falscher Pin, versuch es nochmal!")
 
 # ==============================================================================
 
@@ -74,11 +74,11 @@
 
 # Lösung
 
-# a = 15
-# while a >=0:
-#     print(a)
-#     a -= 3
-# print("Start!")
+a = 15
+while a >=0:
+    print(a)
+    a -= 3
+print("Start!")
 
 # ==============================================================================
 
@@ -92,14 +92,14 @@
 
 # Lösung
 
-# a = 1
-# gesamtsumme = 0
+a = 1
+gesamtsumme = 0
 
-# while a <=25:
-#     if a % 2 != 0:
-#         gesamtsumme += a
-#     a += 1
-# print(gesamtsumme)
+while a <=25:
+    if a % 2 != 0:
+        gesamtsumme += a
+    a += 1
+print(gesamtsumme)
 
 # ==============================================================================
 
@@ -114,15 +114,15 @@
 
 # Lösung
 
-# liste = []
-# summe = 0
-# while True:
-#     eingabe = input("Gib deine Artikel für den Einkauf ein!\n")
-#     if eingabe == "ende":
-#         break
-#     elif eingabe != "ende":
-#         liste.append(eingabe)
-#     summe +=1
-# print(f"Es wurden insgesammt {summe} Artikel erfasst.\n Undzwar: {liste}")
+liste = []
+summe = 0
+while True:
+    eingabe = input("Gib deine Artikel für den Einkauf ein!\n")
+    if eingabe == "ende":
+        break
+    elif eingabe != "ende":
+        liste.append(eingabe)
+    summe +=1
+print(f"Es wurden insgesammt {summe} Artikel erfasst.\n Undzwar: {liste}")
 
 # ==============================================================================
