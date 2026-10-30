@@ -27,22 +27,22 @@
 
 # Lösung
 
-# geschwindigkeiten = [32.5, 41.2, 28.0, 35.8, 43.5, 39.1]
-# print("\n--- MESSPROTOKOLL GESCHWINDIGKEIT ---")
+geschwindigkeiten = [32.5, 41.2, 28.0, 35.8, 43.5, 39.1]
+print("\n--- MESSPROTOKOLL GESCHWINDIGKEIT ---")
 
-# for index, geschwindigkeit in enumerate(geschwindigkeiten, start =1):
+for index, geschwindigkeit in enumerate(geschwindigkeiten, start =1):
 
-#     if geschwindigkeit > 40:
-#         tempo_text = "(Sprint-Rekord!)"
-#     elif geschwindigkeit < 40:
-#         tempo_text = "(Normales Tempo)"
+    if geschwindigkeit > 40:
+        tempo_text = "(Sprint-Rekord!)"
+    elif geschwindigkeit < 40:
+        tempo_text = "(Normales Tempo)"
 
-#     if index % 3 == 0:
-#         meilenstein_text = "[Meilenstein]"
-#     else:
-#         meilenstein_text = ""
+    if index % 3 == 0:
+        meilenstein_text = "[Meilenstein]"
+    else:
+        meilenstein_text = ""
 
-#     print(f"Forschungs-ID {index}: {geschwindigkeit} km/h -> {tempo_text} {meilenstein_text}")
+    print(f"Forschungs-ID {index}: {geschwindigkeit} km/h -> {tempo_text} {meilenstein_text}")
     
 # ==============================================================================
 
