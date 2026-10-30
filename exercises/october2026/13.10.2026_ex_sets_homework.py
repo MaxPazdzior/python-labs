@@ -10,25 +10,25 @@
 # # 3. Finde die Sprachen heraus, die nur im Web-Projekt genutzt werden und in keinem der anderen beiden Projekte vorkommen.
 # # 4. Finde heraus, welche Programmiersprachen in allen drei Projekten gleichzeitig eingesetzt werden (falls es welche gibt).
 
-# # Lösung 
-# # Aufgabe 1)
-# projektw = set(projekt_web)
-# projekta = set(projekt_app)
-# projektd = set(projekt_data)
+# Lösung 
+# Aufgabe 1)
+projektw = set(projekt_web)
+projekta = set(projekt_app)
+projektd = set(projekt_data)
 
-# print(projektw,projekta,projektd)
+print(projektw,projekta,projektd)
 
-# # Aufgabe 2)
-# einzigartig = list(projektw | projekta | projektd)
-# print(f"Die einzigartigen Programmiersprachen, welche man braucht sind: {einzigartig}")
+# Aufgabe 2)
+einzigartig = list(projektw | projekta | projektd)
+print(f"Die einzigartigen Programmiersprachen, welche man braucht sind: {einzigartig}")
 
-# # Aufgabe 3)
-# web = list(projektw - projekta - projektd)
-# print(f"Die Sprachen, welche nur im Web Projekt benutzt werden sind: {web}")
+# Aufgabe 3)
+web = list(projektw - projekta - projektd)
+print(f"Die Sprachen, welche nur im Web Projekt benutzt werden sind: {web}")
 
-# # Aufgabe 4)
-# gleichzeitig = list(projektw & projekta & projektd)
-# print(f"Die Programmiersprache, welche in allen Projekten vorkommt ist: {gleichzeitig}")
+# Aufgabe 4)
+gleichzeitig = list(projektw & projekta & projektd)
+print(f"Die Programmiersprache, welche in allen Projekten vorkommt ist: {gleichzeitig}")
 
 
 # ==============================================================================
@@ -52,22 +52,22 @@
 # 4. "Entwarnung: Diese Zutat ist nicht im Rezept enthalten.": Wenn die Zutat in keinem der beiden Sets existiert.
 
 # Lösung
-# teig_zutaten = {"Mehl", "Milch", "Ei", "Zucker", "Butter"}
-# topping_zutaten = {"Erdbeeren", "Schokolade", "Sahne", "Zucker", "Nüsse"}
+teig_zutaten = {"Mehl", "Milch", "Ei", "Zucker", "Butter"}
+topping_zutaten = {"Erdbeeren", "Schokolade", "Sahne", "Zucker", "Nüsse"}
 
-# beide = teig_zutaten & topping_zutaten
+beide = teig_zutaten & topping_zutaten
 
-# while True:
-#     eingabe = input("Gib eine Zutat ein, welche du suchen möchtest:\n").capitalize()
+while True:
+    eingabe = input("Gib eine Zutat ein, welche du suchen möchtest:\n").capitalize()
 
-#     if eingabe in beide:
-#         print("Warnung: Diese Zutat steckt sowohl im Teig, als auch im Topping")
-#     elif eingabe in teig_zutaten:
-#         print("Achtung: Diese Zutat ist im Teig enthalten")
-#     elif eingabe in topping_zutaten:
-#         print("Achtung: Diese Zutat ist im Topping enthalten")
-#     else:
-#         print("Entwarnung: Diese Zutat ist nicht im Rezept enthalten.")
+    if eingabe in beide:
+        print("Warnung: Diese Zutat steckt sowohl im Teig, als auch im Topping")
+    elif eingabe in teig_zutaten:
+        print("Achtung: Diese Zutat ist im Teig enthalten")
+    elif eingabe in topping_zutaten:
+        print("Achtung: Diese Zutat ist im Topping enthalten")
+    else:
+        print("Entwarnung: Diese Zutat ist nicht im Rezept enthalten.")
 
 # ==============================================================================
 
@@ -96,20 +96,20 @@
 
 # Lösung
 
-# def analyse_users(posted_today, liked_today, churned_users):
-#     super_active = (set(posted_today) & set(liked_today)) - set(churned_users)
-#     silent_readers = (set(liked_today) - set(posted_today)) - set(churned_users) 
-#     cleanup_needed = (set(posted_today) | set(liked_today)) & set(churned_users)
-#     return {"super_active":super_active,
-#             "silent_readers":silent_readers,
-#             "cleanup_needed":cleanup_needed}
+def analyse_users(posted_today, liked_today, churned_users):
+    super_active = (set(posted_today) & set(liked_today)) - set(churned_users)
+    silent_readers = (set(liked_today) - set(posted_today)) - set(churned_users) 
+    cleanup_needed = (set(posted_today) | set(liked_today)) & set(churned_users)
+    return {"super_active":super_active,
+            "silent_readers":silent_readers,
+            "cleanup_needed":cleanup_needed}
 
-# posted = [101, 102, 105, 101]
-# liked = [102, 103, 105, 106]
-# churned = [105, 107]
-# analyse_users(posted, liked, churned)
-# ergebnis = analyse_users(posted, liked, churned)
-# print(f"{ergebnis}")
+posted = [101, 102, 105, 101]
+liked = [102, 103, 105, 106]
+churned = [105, 107]
+analyse_users(posted, liked, churned)
+ergebnis = analyse_users(posted, liked, churned)
+print(f"{ergebnis}")
 
 # ==============================================================================
 
