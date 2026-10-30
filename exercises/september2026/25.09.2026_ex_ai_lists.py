@@ -12,14 +12,14 @@
 
 # Lösung
 
-# zahlen = [3, 12, 7, 18, 5, 22, 9, 14]
+zahlen = [3, 12, 7, 18, 5, 22, 9, 14]
 
-# grosse_zahlen = []
+grosse_zahlen = []
 
-# for i in zahlen:
-#     if i > 10:
-#         grosse_zahlen.append(i)
-# print(f"Zahlen die größer als 10 sind, sind: {grosse_zahlen}\nDie Summe aller großen Zahlen ist: {sum(grosse_zahlen)}")
+for i in zahlen:
+    if i > 10:
+        grosse_zahlen.append(i)
+print(f"Zahlen die größer als 10 sind, sind: {grosse_zahlen}\nDie Summe aller großen Zahlen ist: {sum(grosse_zahlen)}")
 
 # ==============================================================================
 
