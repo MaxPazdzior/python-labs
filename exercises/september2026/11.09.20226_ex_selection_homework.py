@@ -66,18 +66,18 @@ else:
 
 # Lösung:
 
-# kochzeit = 2   # In Minuten
+kochzeit = 2   # In Minuten
 
-# if kochzeit >=10:
-#     print("Das Ei ist steinhart gekocht.")
-# elif kochzeit >=7:
-#     print("Das Ei ist hart, das Eigelb ist fest.")
-# elif kochzeit >=5:
-#     print("Das perfekte Wachsei!")
-# elif kochzeit >=3:
-#     print("Das Ei ist sehr weich , das Eiweiß ist gerade so fest.")
-# else:
-#     print("Das Ei ist noch fast Roh")
+if kochzeit >=10:
+    print("Das Ei ist steinhart gekocht.")
+elif kochzeit >=7:
+    print("Das Ei ist hart, das Eigelb ist fest.")
+elif kochzeit >=5:
+    print("Das perfekte Wachsei!")
+elif kochzeit >=3:
+    print("Das Ei ist sehr weich , das Eiweiß ist gerade so fest.")
+else:
+    print("Das Ei ist noch fast Roh")
 
 # ==============================================================================
 
@@ -111,26 +111,26 @@ else:
 
 # Lösung
 
-# getränk="Kaffee"
-# extra="Zucker"
+getränk="Kaffee"
+extra="Zucker"
 
-# print("Getränk:", getränk)
-# print("Extra:", extra)
+print("Getränk:", getränk)
+print("Extra:", extra)
 
-# if getränk=="Kaffee":
-#     if getränk=="Kaffee" and extra=="Milch":
-#         print("Kaffee wird mit Milch zubereitet.")
-#     elif getränk=="Kaffee" and extra=="Zucker":
-#         print("Süßer Kaffee wird zubereitet.")
-#     else:
-#         print("Schwarzer Kaffee wird zubereitet.")
-# elif getränk=="Tee":
-#     if getränk=="Tee" and extra=="Zucker":
-#         print("Süßer Tee wird zubereitet.")
-#     else:
-#         print("Reiner Tee wird zubereitet.")
-# else:
-#     print("Dieses Getränk ist leider nicht verfügbar.")
+if getränk=="Kaffee":
+    if getränk=="Kaffee" and extra=="Milch":
+        print("Kaffee wird mit Milch zubereitet.")
+    elif getränk=="Kaffee" and extra=="Zucker":
+        print("Süßer Kaffee wird zubereitet.")
+    else:
+        print("Schwarzer Kaffee wird zubereitet.")
+elif getränk=="Tee":
+    if getränk=="Tee" and extra=="Zucker":
+        print("Süßer Tee wird zubereitet.")
+    else:
+        print("Reiner Tee wird zubereitet.")
+else:
+    print("Dieses Getränk ist leider nicht verfügbar.")
 
 # ==============================================================================
 
@@ -177,29 +177,29 @@ else:
 
 # Lösung
 
-# größe="Family"
-# käserand=False
-# abholung=False
-# grundpreis=0
+größe="Family"
+käserand=False
+abholung=False
+grundpreis=0
 
-# if größe=="Standard":
-#     grundpreis=9
-#     if käserand:
-#         grundpreis+=2
-# elif größe=="Family":
-#     grundpreis=15
-#     if käserand:
-#         grundpreis+=4
-# else:
-#     print("Diese Pizzagröße gibt es nicht!")
+if größe=="Standard":
+    grundpreis=9
+    if käserand:
+        grundpreis+=2
+elif größe=="Family":
+    grundpreis=15
+    if käserand:
+        grundpreis+=4
+else:
+    print("Diese Pizzagröße gibt es nicht!")
 
-# if abholung and größe=="Standard" and grundpreis>12:
-#     grundpreis-=3
-#     print("Summe:", grundpreis)
-# elif abholung and größe=="Family" and grundpreis>12:
-#     grundpreis-=3
-#     print("Summe:", grundpreis)
-# else:
-#     print("Summe:", grundpreis)
+if abholung and größe=="Standard" and grundpreis>12:
+    grundpreis-=3
+    print("Summe:", grundpreis)
+elif abholung and größe=="Family" and grundpreis>12:
+    grundpreis-=3
+    print("Summe:", grundpreis)
+else:
+    print("Summe:", grundpreis)
 
 # ==============================================================================
