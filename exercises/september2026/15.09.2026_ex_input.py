@@ -59,19 +59,19 @@ input("\nDrücke Enter um die Berechnung zu beenden.")
 
 # Lösung
 
-# input("Willkommen zu deinem Schaltjahr-Prüfer. Drücke Enter um zu starten")
+input("Willkommen zu deinem Schaltjahr-Prüfer. Drücke Enter um zu starten")
 
-# jahr = int(input("\nBitte gib dein Jahr an um zu überprüfen, ob es ein Schaltjahr ist.\n"))
+jahr = int(input("\nBitte gib dein Jahr an um zu überprüfen, ob es ein Schaltjahr ist.\n"))
 
-# if jahr % 400 == 0:
-#     print("\nDas Jahr",jahr,"ist ein Schaltjahr\n")
-# elif jahr % 100 == 0:
-#     print("\nDas Jahr",jahr,"ist kein Schaltjahr\n")
-# elif jahr % 4 == 0:
-#     print("\nDas Jahr",jahr,"ist ein Schaltjahr\n")
-# else:
-#     print("\nDas Jahr",jahr,"ist kein Schaltjahr\n")
+if jahr % 400 == 0:
+    print("\nDas Jahr",jahr,"ist ein Schaltjahr\n")
+elif jahr % 100 == 0:
+    print("\nDas Jahr",jahr,"ist kein Schaltjahr\n")
+elif jahr % 4 == 0:
+    print("\nDas Jahr",jahr,"ist ein Schaltjahr\n")
+else:
+    print("\nDas Jahr",jahr,"ist kein Schaltjahr\n")
 
-# input("Drücke Enter zum beenden.")
+input("Drücke Enter zum beenden.")
 
 # ==============================================================================
