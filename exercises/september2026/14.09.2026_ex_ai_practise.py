@@ -27,16 +27,16 @@
 
 # Lösung
 
-# alter=11
+alter=11
 
-# if alter >=65:
-#     print("Das Ticket kostet 8€. Sie bekommen den Seniorentarif!")
-# elif alter >=18:
-#     print("Das Ticket kostet 12€. Sie müssen den Erwachsenentarif bezahlen!")
-# elif alter >=12:
-#     print("Das Ticket kostet 6€. Sie müssen den Jugendtarif bezahlen!")
-# else:
-#     print("Das Ticket kostet 4€. Sie müssen den Kindertarif bezahlen!")
+if alter >=65:
+    print("Das Ticket kostet 8€. Sie bekommen den Seniorentarif!")
+elif alter >=18:
+    print("Das Ticket kostet 12€. Sie müssen den Erwachsenentarif bezahlen!")
+elif alter >=12:
+    print("Das Ticket kostet 6€. Sie müssen den Jugendtarif bezahlen!")
+else:
+    print("Das Ticket kostet 4€. Sie müssen den Kindertarif bezahlen!")
 
 # ==============================================================================
 
@@ -63,16 +63,16 @@
 
 # Lösung
 
-# temperatur=18
+temperatur=18
 
-# if temperatur >=25:
-#     print("Zieh ein T-Shirt an, es ist heiß!")
-# elif temperatur >=15:
-#     print("Ein Pullover reicht aus!")
-# elif temperatur >=5:
-#     print("Zieh dir eine warme Jacke an!")
-# else:
-#     print("Es ist eiskalt, zieh den Wintermantel an!")
+if temperatur >=25:
+    print("Zieh ein T-Shirt an, es ist heiß!")
+elif temperatur >=15:
+    print("Ein Pullover reicht aus!")
+elif temperatur >=5:
+    print("Zieh dir eine warme Jacke an!")
+else:
+    print("Es ist eiskalt, zieh den Wintermantel an!")
 
 # ==============================================================================
 
@@ -115,23 +115,23 @@
 
 # Lösung
 
-# hauptgericht="Pizza"
-# beilage="Fritten"
+hauptgericht="Pizza"
+beilage="Fritten"
 
-# if hauptgericht=="Burger":
-#     if beilage=="Fritten":
-#         print("Klassisches Burger-Menü mit Fritten wird zubereitet!")
-#     elif beilage=="Salat":
-#         print("Fitness-Burger-Menü mit Salat wird zubereitet.")
-#     else:
-#         print("Burger ohne gültige Beilage wird zubereitet.")
-# elif hauptgericht=="Wrap":
-#     if beilage=="Fritten":
-#         print("Wrap-Menü mit knusprigen Fritten wird zubereitet.")
-#     else:
-#         print("Gesundes Wrap-Menü wird zubereitet.")
-# else:
-#     print("Dieses Hauptgericht steht nicht auf der Speisekarte.")
+if hauptgericht=="Burger":
+    if beilage=="Fritten":
+        print("Klassisches Burger-Menü mit Fritten wird zubereitet!")
+    elif beilage=="Salat":
+        print("Fitness-Burger-Menü mit Salat wird zubereitet.")
+    else:
+        print("Burger ohne gültige Beilage wird zubereitet.")
+elif hauptgericht=="Wrap":
+    if beilage=="Fritten":
+        print("Wrap-Menü mit knusprigen Fritten wird zubereitet.")
+    else:
+        print("Gesundes Wrap-Menü wird zubereitet.")
+else:
+    print("Dieses Hauptgericht steht nicht auf der Speisekarte.")
     
 # ==============================================================================
 
