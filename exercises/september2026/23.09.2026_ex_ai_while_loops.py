@@ -27,63 +27,63 @@
 
 # Lösung
 
-# versuche = 3
-# programm_aktiv = True
+versuche = 3
+programm_aktiv = True
 
-# while programm_aktiv:
+while programm_aktiv:
 
-#     passwort = input("Willkommen. Bitte geben Sie nun das Passwort ein:\n")
+    passwort = input("Willkommen. Bitte geben Sie nun das Passwort ein:\n")
 
-#     if passwort == "Ares-1":
-#         print("Das Passwort ist korrekt. Willkommen an Board.")
-#         energie = 40
+    if passwort == "Ares-1":
+        print("Das Passwort ist korrekt. Willkommen an Board.")
+        energie = 40
 
-#         while True:
-#             eingabe = input("Bitte gebe nun ein Befehl ein: (status, aufladen, fahren, standby)\n")
+        while True:
+            eingabe = input("Bitte gebe nun ein Befehl ein: (status, aufladen, fahren, standby)\n")
 
-#             if eingabe == "status":
-#                 print(f"Die aktuelle Energie liegt bei {energie}%.")
+            if eingabe == "status":
+                print(f"Die aktuelle Energie liegt bei {energie}%.")
 
-#             elif eingabe == "aufladen":
-#                 aufladen_text = input("Wie viel Prozent sollen aufgeladen werden?\n")
-#                 if aufladen_text.isnumeric():
-#                     aufladen = int(aufladen_text)
-#                     energie += aufladen
-#                     if energie > 100:
-#                         energie = 100
-#                         print(f"Energie überstieg 100% und wurde gekappt. Energie beträgt nun {energie}%!")
-#                     else:
-#                         print(f"Ich habe mich erfolgreich aufgeladen, meine neue Energie beträgt {energie}%!")
-#                 else:
-#                     print("Fehler: Bitte gib eine Zahl ein.")
+            elif eingabe == "aufladen":
+                aufladen_text = input("Wie viel Prozent sollen aufgeladen werden?\n")
+                if aufladen_text.isnumeric():
+                    aufladen = int(aufladen_text)
+                    energie += aufladen
+                    if energie > 100:
+                        energie = 100
+                        print(f"Energie überstieg 100% und wurde gekappt. Energie beträgt nun {energie}%!")
+                    else:
+                        print(f"Ich habe mich erfolgreich aufgeladen, meine neue Energie beträgt {energie}%!")
+                else:
+                    print("Fehler: Bitte gib eine Zahl ein.")
 
-#             elif eingabe == "fahren":
-#                 entladen_text = input("Wie viele Einheiten an Energie sollen verbraucht werden?\n")
-#                 if entladen_text.isnumeric():
-#                     entladen = int(entladen_text)
-#                     if entladen > energie:
-#                         print("So viel Energie haben wir nicht. Lade den Rover vorher auf.")
-#                     else:
-#                         energie -= entladen
-#                         print("Alles klar ich fahre los.")
-#                 else:
-#                     print("Fehler: Bitte gib eine Zahl ein.")
+            elif eingabe == "fahren":
+                entladen_text = input("Wie viele Einheiten an Energie sollen verbraucht werden?\n")
+                if entladen_text.isnumeric():
+                    entladen = int(entladen_text)
+                    if entladen > energie:
+                        print("So viel Energie haben wir nicht. Lade den Rover vorher auf.")
+                    else:
+                        energie -= entladen
+                        print("Alles klar ich fahre los.")
+                else:
+                    print("Fehler: Bitte gib eine Zahl ein.")
 
-#             elif eingabe == "standby":
-#                 print(f"Ich gehe mit einem Energielevel von {energie}% nun in den Standby Mode. Auf Wiedersehen!")
-#                 programm_aktiv = False
-#                 break
+            elif eingabe == "standby":
+                print(f"Ich gehe mit einem Energielevel von {energie}% nun in den Standby Mode. Auf Wiedersehen!")
+                programm_aktiv = False
+                break
 
-#             else:
-#                 print("Diese Eingabe kenne ich nicht. Versuche es nocheinmal!")
+            else:
+                print("Diese Eingabe kenne ich nicht. Versuche es nocheinmal!")
 
-#     else:
-#         versuche -= 1
-#         if versuche > 0:
-#             print(f"Du hast das falsche Passwort eingegeben. Du hast noch {versuche} Versuche!")
-#         else:
-#             print("Du hast 3x das falsche Passwort eingegeben. Authorisierung fehlgeschlagen!")
-#             programm_aktiv = False
+    else:
+        versuche -= 1
+        if versuche > 0:
+            print(f"Du hast das falsche Passwort eingegeben. Du hast noch {versuche} Versuche!")
+        else:
+            print("Du hast 3x das falsche Passwort eingegeben. Authorisierung fehlgeschlagen!")
+            programm_aktiv = False
 
 # ==============================================================================
 
