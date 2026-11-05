@@ -1,17 +1,17 @@
 # ==============================================================================
 
 import csv
-# liste_csv = []
+liste_csv = []
 
-# try:
-#     with open("Python/Kundeninfos.csv", mode="r", encoding="UTF-8", newline="") as file:
-#         reader = csv.reader(file, delimiter=";")
-#         for row in reader:
-#             liste_csv.append(row)
-# except FileNotFoundError:
-#     print("Error: File not found.")
+try:
+    with open("Python/Kundeninfos.csv", mode="r", encoding="UTF-8", newline="") as file:
+        reader = csv.reader(file, delimiter=";")
+        for row in reader:
+            liste_csv.append(row)
+except FileNotFoundError:
+    print("Error: File not found.")
 
-# print(liste_csv)
+print(liste_csv)
 
 # ==============================================================================
 
