@@ -16,7 +16,7 @@
 import datetime as dt
 
 begin = dt.time(hour=8, minute=0, second=0)
-end = dt.time(hour=14, minute=0, second=0)
+end = dt.time(hour=17, minute=0, second=0)
 now = dt.datetime.now().time().replace(microsecond=0)
 
 if now < begin or now > end:
