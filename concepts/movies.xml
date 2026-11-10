@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<movie_database>
+    <movie>
+        <id>SF001</id>
+        <title>Dune: Part Two</title>
+        <year>2024</year>
+        <director>Denis Villeneuve</director>
+        <runtime_min>166</runtime_min>
+        <rating>8.6</rating>
+        <category>Science Fiction</category>
+    </movie>
+    <movie>
+        <id>SF002</id>
+        <title>Interstellar</title>
+        <year>2014</year>
+        <director>Christopher Nolan</director>
+        <runtime_min>169</runtime_min>
+        <rating>8.7</rating>
+        <category>Science Fiction</category>
+    </movie>
+    <movie>
+        <id>SF003</id>
+        <title>The Matrix</title>
+        <year>1999</year>
+        <director>Lana Wachowski, Lilly Wachowski</director>
+        <runtime_min>136</runtime_min>
+        <rating>8.7</rating>
+        <category>Science Fiction</category>
+    </movie>
+    <movie>
+        <id>SF004</id>
+        <title>Blade Runner 2049</title>
+        <year>2017</year>
+        <director>Denis Villeneuve</director>
+        <runtime_min>164</runtime_min>
+        <rating>8.0</rating>
+        <category>Science Fiction</category>
+    </movie>
+    <movie>
+        <id>SF005</id>
+        <title>Inception</title>
+        <year>2010</year>
+        <director>Christopher Nolan</director>
+        <runtime_min>148</runtime_min>
+        <rating>8.8</rating>
+        <category>Science Fiction</category>
+    </movie>
+    <movie>
+        <id>AC001</id>
+        <title>Mad Max: Fury Road</title>
+        <year>2015</year>
+        <director>George Miller</director>
+        <runtime_min>120</runtime_min>
+        <rating>8.1</rating>
+        <category>Action</category>
+    </movie>
+    <movie>
+        <id>AC002</id>
+        <title>John Wick</title>
+        <year>2014</year>
+        <director>Chad Stahelski</director>
+        <runtime_min>101</runtime_min>
+        <rating>7.4</rating>
+        <category>Action</category>
+    </movie>
+    <movie>
+        <id>AC003</id>
+        <title>The Dark Knight</title>
+        <year>2008</year>
+        <director>Christopher Nolan</director>
+        <runtime_min>152</runtime_min>
+        <rating>9.0</rating>
+        <category>Action</category>
+    </movie>
+    <movie>
+        <id>AC004</id>
+        <title>Gladiator</title>
+        <year>2000</year>
+        <director>Ridley Scott</director>
+        <runtime_min>155</runtime_min>
+        <rating>8.5</rating>
+        <category>Action</category>
+    </movie>
+    <movie>
+        <id>AC005</id>
+        <title>Top Gun: Maverick</title>
+        <year>2022</year>
+        <director>Joseph Kosinski</director>
+        <runtime_min>130</runtime_min>
+        <rating>8.2</rating>
+        <category>Action</category>
+    </movie>
+    <movie>
+        <id>DR001</id>
+        <title>Oppenheimer</title>
+        <year>2023</year>
+        <director>Christopher Nolan</director>
+        <runtime_min>180</runtime_min>
+        <rating>8.3</rating>
+        <category>Drama</category>
+    </movie>
+    <movie>
+        <id>DR002</id>
+        <title>The Godfather</title>
+        <year>1972</year>
+        <director>Francis Ford Coppola</director>
+        <runtime_min>175</runtime_min>
+        <rating>9.2</rating>
+        <category>Drama</category>
+    </movie>
+    <movie>
+        <id>DR003</id>
+        <title>The Shawshank Redemption</title>
+        <year>1994</year>
+        <director>Frank Darabont</director>
+        <runtime_min>142</runtime_min>
+        <rating>9.3</rating>
+        <category>Drama</category>
+    </movie>
+    <movie>
+        <id>DR004</id>
+        <title>Parasite</title>
+        <year>2019</year>
+        <director>Bong Joon Ho</director>
+        <runtime_min>132</runtime_min>
+        <rating>8.5</rating>
+        <category>Drama</category>
+    </movie>
+    <movie>
+        <id>DR005</id>
+        <title>Whiplash</title>
+        <year>2014</year>
+        <director>Damien Chazelle</director>
+        <runtime_min>106</runtime_min>
+        <rating>8.5</rating>
+        <category>Drama</category>
+    </movie>
+    <movie>
+        <id>AN001</id>
+        <title>Spirited Away</title>
+        <year>2001</year>
+        <director>Hayao Miyazaki</director>
+        <runtime_min>125</runtime_min>
+        <rating>8.6</rating>
+        <category>Animation</category>
+    </movie>
+    <movie>
+        <id>AN002</id>
+        <title>Spider-Man: Into the Spider-Verse</title>
+        <year>2018</year>
+        <director>Bob Persichetti, Peter Ramsey, Rodney Rothman</director>
+        <runtime_min>117</runtime_min>
+        <rating>8.4</rating>
+        <category>Animation</category>
+    </movie>
+    <movie>
+        <id>AN003</id>
+        <title>WALL-E</title>
+        <year>2008</year>
+        <director>Andrew Stanton</director>
+        <runtime_min>98</runtime_min>
+        <rating>8.4</rating>
+        <category>Animation</category>
+    </movie>
+    <movie>
+        <id>AN004</id>
+        <title>Toy Story</title>
+        <year>1995</year>
+        <director>John Lasseter</director>
+        <runtime_min>81</runtime_min>
+        <rating>8.3</rating>
+        <category>Animation</category>
+    </movie>
+    <movie>
+        <id>AN005</id>
+        <title>Coco</title>
+        <year>2017</year>
+        <director>Lee Unkrich</director>
+        <runtime_min>105</runtime_min>
+        <rating>8.4</rating>
+        <category>Animation</category>
+    </movie>
+</movie_database>

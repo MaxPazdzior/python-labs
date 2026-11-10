@@ -1,0 +1,21 @@
+{
+    "unternehmen": "TechCorp GmbH",
+    "standort": "München",
+    "abteilungen": [
+        {
+            "name": "Entwicklung",
+            "mitarbeiter": [
+                {"id": 1, "name": "Maximilian", "rolle": "Developer", "gehalt": 62000, "skills": ["Python", "Docker"]},
+                {"id": 2, "name": "Sophia", "rolle": "Data Scientist", "gehalt": 68000, "skills": ["Python", "SQL", "R"]},
+                {"id": 3, "name": "Lukas", "rolle": "Developer", "gehalt": 55000, "skills": ["JavaScript", "React"]}
+            ]
+        },
+        {
+            "name": "Marketing",
+            "mitarbeiter": [
+                {"id": 4, "name": "Emma", "rolle": "Manager", "gehalt": 58000, "skills": ["SEO", "Copywriting"]},
+                {"id": 5, "name": "Felix", "rolle": "Designer", "gehalt": 49000, "skills": ["Photoshop", "Figma"]}
+            ]
+        }
+    ]
+}
