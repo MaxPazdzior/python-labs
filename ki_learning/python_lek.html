@@ -137,6 +137,35 @@
       z-index: 0;
     }
 
+    /* Ziehbare Griffleiste zum Vergroessern des Code-Fensters */
+    .editor-resize-handle {
+      height: 11px;
+      background-color: #252526;
+      border-top: 1px solid #333333;
+      cursor: ns-resize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+    .editor-resize-handle:hover,
+    .editor-resize-handle:active {
+      background-color: #007acc;
+    }
+    .editor-resize-grip {
+      width: 38px;
+      height: 3px;
+      border-radius: 9999px;
+      background-color: #6b7280;
+      transition: background-color 0.15s ease;
+    }
+    .editor-resize-handle:hover .editor-resize-grip,
+    .editor-resize-handle:active .editor-resize-grip {
+      background-color: #ffffff;
+    }
+
     /* VS Code IntelliSense Autocomplete & Signature Help Overlays */
     .vscode-autocomplete {
       position: absolute;
@@ -314,7 +343,7 @@
     <!-- ================================================================ -->
     <section id="tab-ide" class="tab-panel hidden space-y-5">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        <aside class="lg:col-span-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-3">
+        <aside id="ide-sidebar-col" class="lg:col-span-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-3">
           <div class="flex items-center justify-between gap-2">
             <h2 class="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Praxis-Aufgaben (<span id="ide-count-label">52</span>)</h2>
             <button id="ide-sandbox-btn" type="button"
@@ -336,7 +365,7 @@
           <div id="ide-task-list" class="space-y-1.5 max-h-[540px] overflow-y-auto pr-1"></div>
         </aside>
 
-        <div class="lg:col-span-8 space-y-4">
+        <div id="ide-main-col" class="lg:col-span-8 space-y-4">
           <div id="ide-task-header" class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-5"></div>
 
           <div class="editor-shell rounded-xl border border-zinc-300 dark:border-zinc-800 bg-[#1e1e1e] text-[#d4d4d4] overflow-visible">
@@ -363,6 +392,10 @@
                   class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#333333] hover:bg-[#3e3e42] text-zinc-200 border border-[#454545] transition">
                   Musterlösung
                 </button>
+                <button id="ide-expand-btn" type="button" title="Editor auf volle Seitenbreite umschalten"
+                  class="hidden lg:inline-block px-3 py-1.5 rounded-md text-xs font-medium bg-[#333333] hover:bg-[#3e3e42] text-zinc-200 border border-[#454545] transition">
+                  Breite: Vollbild
+                </button>
                 <button id="ide-reset-btn" type="button"
                   class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#333333] hover:bg-[#3e3e42] text-zinc-300 border border-[#454545] transition">
                   Zurücksetzen
@@ -370,7 +403,7 @@
               </div>
             </div>
 
-            <div class="flex bg-[#1e1e1e] h-[360px] relative">
+            <div id="ide-editor-body" class="flex bg-[#1e1e1e] relative" style="height: 360px;">
               <pre id="ide-gutter" class="editor-gutter w-12 text-right text-[#858585] bg-[#1e1e1e] border-r border-[#2d2d2d] shrink-0 select-none">1</pre>
               <div id="ide-editor-wrap" class="code-editor-wrap">
                 <div id="ide-mirror" class="caret-mirror" aria-hidden="true"></div>
@@ -382,11 +415,16 @@
               </div>
             </div>
 
+            <div id="ide-resize-handle" class="editor-resize-handle" role="separator" aria-orientation="horizontal"
+              title="Ziehen zum Vergrößern/Verkleinern · Doppelklick: An Codehöhe anpassen">
+              <span class="editor-resize-grip"></span>
+            </div>
+
             <div class="flex items-center justify-between px-4 py-1 bg-[#007acc] text-white text-[11px] font-mono select-none rounded-b-xl">
               <div class="flex items-center gap-3">
                 <span id="ide-cursor-pos" class="tabular-nums">Zeile 1, Spalte 1</span>
                 <span>Spaces: 4</span>
-                <span class="hidden sm:inline">IntelliSense aktiv</span>
+                <span class="hidden sm:inline">Unten ziehen: Fensterhöhe anpassen</span>
               </div>
               <div class="flex items-center gap-3">
                 <span>UTF-8</span>
@@ -397,19 +435,20 @@
             <div id="ide-hint-box" class="hidden px-4 py-3 bg-[#252526] border-t border-[#333333] text-zinc-200 text-sm rounded-b-xl"></div>
           </div>
 
+          <!-- Konsolenausgabe & Automatisierte Unit-Tests -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="rounded-xl border border-zinc-300 dark:border-zinc-800 bg-[#1e1e1e] text-[#d4d4d4] p-4">
-              <div class="flex items-center justify-between mb-2">
-                <h3 class="text-xs font-semibold uppercase tracking-wider text-[#858585]">Ausgabe (stdout / stderr)</h3>
-                <button id="ide-clear-console" type="button" class="text-xs text-zinc-400 hover:text-zinc-200">Leeren</button>
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Konsolenausgabe</h3>
+                <button id="ide-clear-console" type="button" class="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200">Leeren</button>
               </div>
-              <pre id="ide-console" class="text-xs font-mono whitespace-pre-wrap break-words text-zinc-300 min-h-[120px] max-h-[240px] overflow-y-auto"># Bereit. Mit "Ausführen" oder Strg+Enter starten.</pre>
+              <pre id="ide-console" class="min-h-[120px] max-h-[240px] overflow-auto rounded-lg bg-[#1e1e1e] text-zinc-200 p-3 text-xs font-mono whitespace-pre-wrap"># Klicke auf „Ausführen“ oder „Tests prüfen“ ...</pre>
             </div>
 
-            <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4">
-              <h3 class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-2">Automatisierte Tests</h3>
-              <div id="ide-test-results" class="space-y-2 text-sm text-zinc-600 dark:text-zinc-400 min-h-[120px] max-h-[240px] overflow-y-auto">
-                Über <strong>Tests prüfen</strong> wird der Code gegen die erwarteten Variablen und Ausgaben validiert.
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-2">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Automatisierte Unit-Tests</h3>
+              <div id="ide-test-results" class="min-h-[120px] max-h-[240px] overflow-auto space-y-2 text-xs text-zinc-500 dark:text-zinc-400">
+                Klicke auf „Tests prüfen“, um deine Lösung automatisch gegen alle Testfälle zu validieren.
               </div>
             </div>
           </div>
@@ -763,7 +802,7 @@
     }
 
     /* ========================================================================
-     * 1B. VS CODE MINI-IDE CONTROLLER (AUTO-BRACKETS, INDENT, INTELLISENSE, SIG HELP)
+     * 1B. VS CODE MINI-IDE CONTROLLER (AUTO-BRACKETS, INDENT, INTELLISENSE, RESIZE)
      * ======================================================================== */
 
     const PY_AUTOCOMPLETE_METHODS = [
@@ -806,7 +845,6 @@
     ];
 
     const PY_AUTOCOMPLETE_GLOBALS = [
-      // Built-in Funktionen & Typen
       { label: 'print', kind: 'builtin', isCallable: true, sig: 'print(*values, sep=" ", end="\\n")', params: ['*values', 'sep=" "', 'end="\\n"'], doc: 'Gibt Werte auf der Standardausgabe aus.' },
       { label: 'len', kind: 'builtin', isCallable: true, sig: 'len(obj)', params: ['obj'], doc: 'Gibt die Anzahl der Elemente oder Zeichen zurück.' },
       { label: 'range', kind: 'builtin', isCallable: true, sig: 'range(start, stop[, step])', params: ['start', 'stop', 'step'], doc: 'Erzeugt eine Zahlenfolge von start (inkl.) bis stop (exkl.).' },
@@ -833,7 +871,6 @@
       { label: 'bin', kind: 'builtin', isCallable: true, sig: 'bin(x)', params: ['x'], doc: 'Gibt die Binärdarstellung einer Ganzzahl mit Präfix 0b zurück.' },
       { label: 'hex', kind: 'builtin', isCallable: true, sig: 'hex(x)', params: ['x'], doc: 'Gibt die Hexadezimaldarstellung einer Ganzzahl mit Präfix 0x zurück.' },
       { label: 'oct', kind: 'builtin', isCallable: true, sig: 'oct(x)', params: ['x'], doc: 'Gibt die Oktaldarstellung einer Ganzzahl mit Präfix 0o zurück.' },
-      // Keywords
       { label: 'if', kind: 'keyword', isCallable: false },
       { label: 'elif', kind: 'keyword', isCallable: false },
       { label: 'else', kind: 'keyword', isCallable: false },
@@ -916,7 +953,7 @@
       return Array.from(ids);
     }
 
-    function attachVscodeEditor({ textarea, highlightEl, gutterEl, cursorPosEl, mirrorEl, acEl, sigEl, onChange, onRun }) {
+    function attachVscodeEditor({ textarea, highlightEl, gutterEl, cursorPosEl, mirrorEl, acEl, sigEl, bodyEl, resizeHandleEl, defaultHeight, onResize, onChange, onRun }) {
       const PAIRS = { '(': ')', '[': ']', '{': '}', '"': '"', "'": "'" };
       const CLOSERS = new Set([')', ']', '}', '"', "'"]);
       let acItems = [];
@@ -1006,7 +1043,6 @@
         }
 
         const before = val.slice(0, pos);
-        // Kontext 1: Methodenaufruf nach Punkt (z.B. liste.ap oder text.)
         const dotMatch = before.match(/([a-zA-Z_]\w*)\s*\.\s*([a-zA-Z_]\w*)?$/);
         if (dotMatch) {
           const receiver = dotMatch[1];
@@ -1027,7 +1063,6 @@
           return;
         }
 
-        // Kontext 2: Bezeichner / Keyword / Built-in ab 2 Zeichen
         const wordMatch = before.match(/(?:^|[^a-zA-Z0-9_.])([a-zA-Z_]\w{1,})$/);
         if (wordMatch) {
           const typed = wordMatch[1];
@@ -1061,7 +1096,6 @@
           return;
         }
 
-        // Rückwärts nach der nächsten offenen, ungeschlossenen '(' suchen
         let depth = 0;
         let commaCount = 0;
         let openParenIdx = -1;
@@ -1090,7 +1124,6 @@
           } else if (ch === ',' && depth === 0) {
             commaCount++;
           } else if (ch === '\n' && depth === 0) {
-            // Einzeiliger Aufruf-Kontext
             break;
           }
         }
@@ -1186,7 +1219,6 @@
         const end = textarea.selectionEnd || 0;
         const val = textarea.value;
 
-        // 1. Autocomplete-Navigation & -Übernahme
         if (acEl && !acEl.classList.contains('hidden') && acItems.length > 0) {
           if (e.key === 'ArrowDown') {
             e.preventDefault();
@@ -1213,12 +1245,11 @@
         }
 
         if (e.key === 'Escape') {
-          hideSignatureHelp: hideSigHelp();
+          hideSigHelp();
           hideAutocomplete();
           return;
         }
 
-        // 2. Strg+Enter: Code ausführen
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
           e.preventDefault();
           hideAutocomplete();
@@ -1227,7 +1258,6 @@
           return;
         }
 
-        // 3. Tab & Shift+Tab (4 Leerzeichen Einrückung / Ausrückung)
         if (e.key === 'Tab') {
           e.preventDefault();
           if (e.shiftKey) {
@@ -1251,7 +1281,6 @@
           return;
         }
 
-        // 4. Smart-Brackets & Quotes: Skip-Over für schließende Zeichen ), ], }, ", '
         if (start === end && CLOSERS.has(e.key) && val[start] === e.key && val[start - 1] !== '\\') {
           e.preventDefault();
           textarea.selectionStart = textarea.selectionEnd = start + 1;
@@ -1260,7 +1289,6 @@
           return;
         }
 
-        // 5. Auto-Closing für (, [, {, ", '
         if (Object.prototype.hasOwnProperty.call(PAIRS, e.key) && !e.ctrlKey && !e.metaKey && !e.altKey) {
           const openCh = e.key;
           const closeCh = PAIRS[openCh];
@@ -1268,7 +1296,6 @@
           const prevCh = val[start - 1] || '';
 
           if (start !== end) {
-            // Markierten Text umschließen
             e.preventDefault();
             const selected = val.slice(start, end);
             textarea.value = val.slice(0, start) + openCh + selected + closeCh + val.slice(end);
@@ -1294,7 +1321,6 @@
           }
         }
 
-        // 6. Backspace in leerem Klammer-/Anführungszeichen-Paar löscht beide
         if (e.key === 'Backspace' && start === end && start > 0) {
           const prevCh = val[start - 1];
           const nextCh = val[start];
@@ -1310,7 +1336,6 @@
           }
         }
 
-        // 7. Auto-Indentation bei Enter (+4 Leerzeichen nach Doppelpunkt ':', sonst aktuelle Einrückung beibehalten)
         if (e.key === 'Enter') {
           e.preventDefault();
           hideAutocomplete();
@@ -1319,7 +1344,6 @@
           const indentMatch = currentLineBeforeCursor.match(/^[ \t]*/);
           let indent = indentMatch ? indentMatch[0] : '';
 
-          // Kommentar am Zeilenende ignorieren, wenn auf ':' geprüft wird
           const codeWithoutComment = currentLineBeforeCursor.replace(/#.*$/, '').trimEnd();
           const prevCh = val[start - 1] || '';
           const nextCh = val[start] || '';
@@ -1343,6 +1367,73 @@
           return;
         }
       });
+
+      // Vertikales Ziehen zum Vergroessern/Verkleinern des Editor-Fensters (Maus & Touch)
+      if (bodyEl && resizeHandleEl) {
+        let isResizing = false;
+        let startY = 0;
+        let startHeight = 0;
+
+        const applyHeight = newH => {
+          const clamped = Math.max(180, Math.min(820, Math.round(newH)));
+          bodyEl.style.height = `${clamped}px`;
+          sync();
+          hideAutocomplete();
+          hideSigHelp();
+          if (onResize) onResize(clamped);
+        };
+
+        const onPointerMove = clientY => {
+          if (!isResizing) return;
+          applyHeight(startHeight + (clientY - startY));
+        };
+
+        const onMouseMove = e => onPointerMove(e.clientY);
+        const onTouchMove = e => {
+          if (e.touches && e.touches.length > 0) onPointerMove(e.touches[0].clientY);
+        };
+
+        const stopResize = () => {
+          if (!isResizing) return;
+          isResizing = false;
+          document.body.style.cursor = '';
+          document.body.style.userSelect = '';
+          window.removeEventListener('mousemove', onMouseMove);
+          window.removeEventListener('mouseup', stopResize);
+          window.removeEventListener('touchmove', onTouchMove);
+          window.removeEventListener('touchend', stopResize);
+        };
+
+        resizeHandleEl.addEventListener('mousedown', e => {
+          e.preventDefault();
+          isResizing = true;
+          startY = e.clientY;
+          startHeight = bodyEl.getBoundingClientRect().height;
+          document.body.style.cursor = 'ns-resize';
+          document.body.style.userSelect = 'none';
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', stopResize);
+        });
+
+        resizeHandleEl.addEventListener('touchstart', e => {
+          if (!e.touches || e.touches.length === 0) return;
+          e.preventDefault();
+          isResizing = true;
+          startY = e.touches[0].clientY;
+          startHeight = bodyEl.getBoundingClientRect().height;
+          window.addEventListener('touchmove', onTouchMove, { passive: true });
+          window.addEventListener('touchend', stopResize);
+        }, { passive: false });
+
+        resizeHandleEl.addEventListener('dblclick', () => {
+          const lineCount = Math.max(1, textarea.value.split('\n').length);
+          const autoHeight = Math.max(260, lineCount * 23 + 48);
+          const currentH = bodyEl.getBoundingClientRect().height;
+          const fallbackH = defaultHeight || 360;
+          const targetH = Math.abs(currentH - autoHeight) < 24 ? fallbackH : autoHeight;
+          applyHeight(targetH);
+        });
+      }
 
       return { sync, hideAutocomplete, hideSigHelp };
     }
@@ -4337,7 +4428,6 @@
        * ------------------------------------------------------------------ */
       const rngTransfer = createRng(9901);
       const transferQuestions = [
-        // Modul 1 + 10 + 11 Transfer
         {
           moduleId: 1, difficulty: 'Profi', type: 'Multiple Choice',
           question: 'Transferaufgabe (M01 + M10 + M11): Ein Kunde verlangt eine REST-API für seine Bestellverwaltung mit JSON-Schnittstelle, 99,95 % Verfügbarkeit und automatisierten Grenztests für Bestellmengen (1–99 Stück). Welche Zuordnung stimmt?',
@@ -4360,7 +4450,6 @@
           hint: '(10000 - 15) / 10000 * 100 = 9985 / 10000 * 100 = 99.85.',
           explanation: '99.85 ist kleiner als 99.9 -> else-Zweig -> "SLA VERLETZT 99.85".'
         },
-        // Modul 2 + 5 + 6 Transfer
         {
           moduleId: 2, difficulty: 'Profi', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M02 Typprüfung + M05 Schleifen + M06 Listen): Was gibt diese Typ-Filterung aus?',
@@ -4381,7 +4470,6 @@
           hint: 'int("007") == 7, float("19.5") == 19.5, bool(int("1")) == True (1).',
           explanation: '7 + 19.5 * 1 = 26.5 vom Typ float -> "26.5 float".'
         },
-        // Modul 3 + 4 + 6 Transfer
         {
           moduleId: 3, difficulty: 'Profi', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M03 String-Methoden + M04 Verzweigungen + M06 Listen): Was gibt dieser IBAN-/Code-Check aus?',
@@ -4402,7 +4490,6 @@
           hint: '10 ** 1 = 10; i nimmt die Werte 0, 2, 4 an (nums[0]=10, nums[2]=30, nums[4]=50).',
           explanation: '10//10 + 30//10 + 50//10 = 1 + 3 + 5 = 9; nums[1:4:2] nimmt Index 1 und 3 -> [20, 40].'
         },
-        // Modul 4 + 5 + 7 Transfer
         {
           moduleId: 4, difficulty: 'Profi', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M04 `match/case` + M05 Schleife + M07 Dictionary): Was wird ausgegeben?',
@@ -4423,7 +4510,6 @@
           hint: 'Die Guard-Bedingung fängt ungültige Indizes (r=2) ab, bevor auf matrix[r][c] zugegriffen wird.',
           explanation: 'grid[0][1]==1 ("HIT"), r=2 ist außerhalb ("OUT"), grid[1][1]==0 ("MISS").'
         },
-        // Modul 5 + 6 + 7 Transfer
         {
           moduleId: 5, difficulty: 'Experte', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M05 verschachtelte Schleifen + M06 2D-Liste + M07 Dictionary): Was wird ausgegeben?',
@@ -4444,7 +4530,6 @@
           hint: 'Der else-Zweig einer for-Schleife wird NUR dann ausgeführt, wenn die Schleife NICHT per break verlassen wurde.',
           explanation: 'Bei n=9 greift 9 % 3 == 0 -> break -> False. Bei n=11 kein Teiler -> Schleifen-else -> True.'
         },
-        // Modul 6 + 7 + 9 Transfer
         {
           moduleId: 6, difficulty: 'Experte', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M06 Slicing & Copy + M07 Dict + M09 Funktion): Was wird ausgegeben?',
@@ -4465,7 +4550,6 @@
           hint: 'Zähle über beide Kurslisten hinweg, wie viele Kurse jeder Teilnehmer besucht.',
           explanation: 'Max besucht 2 Kurse, Anna 1 Kurs, insgesamt gibt es 4 verschiedene Teilnehmer (Anna, Max, Lisa, Tom).'
         },
-        // Modul 8 + 3 + 6 Transfer
         {
           moduleId: 8, difficulty: 'Profi', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M08 Hexadezimal + M03 Slicing + M06 Liste): Was gibt diese RGB-Umwandlung aus?',
@@ -4486,7 +4570,6 @@
           hint: 'Slicing [2:] entfernt die Python-Präfixe "0b" und "0x". 15(10) = 1111(2), 16(10) = 10(16).',
           explanation: 'tabelle[15]["bin"] == "1111" und tabelle[16]["hex"] == "10" -> "1111 10".'
         },
-        // Modul 9 + 11 Transfer
         {
           moduleId: 9, difficulty: 'Experte', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M09 Entscheidungstabelle + M11 Grenzwertanalyse): Was gibt diese Umsetzung der IBB-Versandlogik (150 EUR / 300 EUR) an den Grenzwerten aus?',
@@ -4497,7 +4580,6 @@
           hint: 'Bis einschließlich 150 EUR (<= 150) fallen 8 EUR Versand an; ab 150.01 EUR ist der Versand 0 EUR.',
           explanation: 'versand(150) == 8, versand(150.01) == 0, versand(300) == 0 -> "8 0 0".'
         },
-        // Modul 10 + 7 + 9 Transfer
         {
           moduleId: 10, difficulty: 'Experte', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M10 JSON + M09 Funktion + M07 Dict): Was gibt diese API-Antwort-Auswertung aus?',
@@ -4508,7 +4590,6 @@
           hint: 'Nur Nutzer "A" hat "aktiv": true; "B" ist False und bei "C" liefert .get("aktiv") None.',
           explanation: 'Genau 1 Datensatz erfüllt u.get("aktiv") is True -> Ausgabe: 1.'
         },
-        // Modul 11 + 9 + 5 Transfer
         {
           moduleId: 11, difficulty: 'Python Entwickler', type: 'Code-Ausgabe',
           question: 'Transferaufgabe (M11 Event-Dispatcher + M09 Funktionen + M06 Liste): Was wird ausgegeben?',
@@ -4526,9 +4607,7 @@
         addQ({ ...item, ...built });
       }
 
-      // Zusätzliche deterministische Generatoren für ausgewogene Tiefe (insg. > 900 Fragen)
       for (let k = 0; k < 24; k++) {
-        // Modul 1: CRUD- & Generationen-Zuordnung
         const crudPairs = [
           { action: 'Einen neuen Datensatz in der Datenbank anlegen', op: 'Create (C)', wrong: ['Read (R)', 'Update (U)', 'Delete (D)'] },
           { action: 'Bestehende Kundendaten suchen und anzeigen', op: 'Read (R)', wrong: ['Create (C)', 'Update (U)', 'Delete (D)'] },
@@ -4547,7 +4626,6 @@
           });
         }
 
-        // Modul 4: Kombinierte Schwellenwert-Verzweigung
         const temp = randInt(rngTransfer, -5, 36);
         let meldung = 'Frostig!';
         if (temp > 30) meldung = 'Es ist heiß!';
@@ -4564,7 +4642,6 @@
           explanation: `Bei temperatur = ${temp} greift der Zweig "${meldung}".`
         });
 
-        // Modul 8: Hex-zu-Dezimal & Binär-Addition
         const bVal = randInt(rngTransfer, 16, 240);
         const hexStr = bVal.toString(16).toUpperCase();
         const builtM8 = buildOptions(String(bVal), [String(bVal + 16), String(bVal - 1), String(parseInt(hexStr, 10) || bVal + 10)], rngTransfer);
@@ -4576,7 +4653,6 @@
           explanation: `${hexStr}(16) entspricht ${bVal}(10).`
         });
 
-        // Modul 9: Tupel-Unpacking min_und_max
         const x1 = randInt(rngTransfer, 2, 15);
         const x2 = randInt(rngTransfer, 16, 40);
         const x3 = randInt(rngTransfer, 1, 14);
@@ -4818,7 +4894,6 @@
           { label: 'differenzen == {"B2": -2, "C3": -8}', check: 'ns.get("differenzen") == {"B2": -2, "C3": -8}' }
         ]
       },
-      /* --- 26 NEUE PRAXIS- & TRANSFERAUFGABEN (IDE-19 BIS IDE-44) --- */
       {
         id: 'IDE-19', moduleId: 1, difficulty: 'Anfänger',
         title: 'IBB-Skript 01: CRUD-Statusprotokoll mit f-Strings',
@@ -5131,7 +5206,6 @@
           { label: 'Ausgabe ist SBWKRQ LEE 2026', check: 'stdout.strip() == "SBWKRQ LEE 2026"' }
         ]
       },
-      /* --- BESTEHENDE AUFGABEN AUS IBB-SKRIPTEN & GIT (IDE-45 BIS IDE-56) --- */
       {
         id: 'IDE-45', moduleId: 4, difficulty: 'Anfänger',
         title: 'IBB-Skript 07: Temperatur-Check umsetzen',
@@ -5354,6 +5428,9 @@
       practiceHintShown: {},
       selectedIdeTaskId: IDE_TASKS[0].id,
       ideDrafts: {},
+      ideEditorHeight: 360,
+      examEditorHeight: 280,
+      ideExpanded: false,
       sandboxCode: '# Freie Python 3.12 Sandbox\n# Teste hier beliebigen Code aus deinen IBB-Unterlagen!\n\nnamen = ["Max", "Anna", "Tom", "Lisa"]\nfor i, name in enumerate(namen, start=1):\n    print(f"{i}. {name}")\n',
       isSandbox: false,
       mainEditorCtrl: null,
@@ -6243,7 +6320,7 @@ json.dumps({
                   Code testen &amp; prüfen
                 </button>
               </div>
-              <div class="flex bg-[#1e1e1e] h-[260px] relative">
+              <div id="exam-ide-editor-body" class="flex bg-[#1e1e1e] relative" style="height: ${STATE.examEditorHeight}px;">
                 <pre id="exam-ide-gutter" class="editor-gutter w-12 text-right text-[#858585] bg-[#1e1e1e] border-r border-[#2d2d2d] shrink-0 select-none">1</pre>
                 <div class="code-editor-wrap">
                   <div id="exam-ide-mirror" class="caret-mirror" aria-hidden="true"></div>
@@ -6252,6 +6329,10 @@ json.dumps({
                   <div id="exam-ide-autocomplete" class="vscode-autocomplete hidden" role="listbox"></div>
                   <div id="exam-ide-sig-help" class="vscode-sig-help hidden" role="tooltip"></div>
                 </div>
+              </div>
+              <div id="exam-ide-resize-handle" class="editor-resize-handle rounded-b-xl" role="separator" aria-orientation="horizontal"
+                title="Ziehen zum Vergrößern/Verkleinern · Doppelklick: An Codehöhe anpassen">
+                <span class="editor-resize-grip"></span>
               </div>
             </div>
 
@@ -6294,6 +6375,10 @@ json.dumps({
           mirrorEl: document.getElementById('exam-ide-mirror'),
           acEl: document.getElementById('exam-ide-autocomplete'),
           sigEl: document.getElementById('exam-ide-sig-help'),
+          bodyEl: document.getElementById('exam-ide-editor-body'),
+          resizeHandleEl: document.getElementById('exam-ide-resize-handle'),
+          defaultHeight: 280,
+          onResize: h => { STATE.examEditorHeight = h; },
           onChange: () => {
             item.code = exEditor.value;
             updateExamProgress();
@@ -6305,13 +6390,19 @@ json.dumps({
 
         document.getElementById('exam-ide-run-btn').addEventListener('click', async () => {
           const outEl = document.getElementById('exam-ide-out');
-          outEl.textContent = 'Ausführung und Tests laufen ...';
+          outEl.textContent = 'Tests werden ausgeführt ...';
           try {
             const res = await runPythonCode(item.code, t.tests);
             item.testResults = res.tests;
             const passed = res.tests.filter(x => x.passed).length;
-            item.stdout = `${res.stdout || ''}${res.error ? '\n' + res.error : ''}\n[Tests bestanden: ${passed} / ${res.tests.length}]`.trim();
-            outEl.textContent = item.stdout;
+            let text = res.stdout ? `Ausgabe:\n${res.stdout}\n` : '';
+            if (res.error) text += `Fehler:\n${res.error}\n`;
+            text += `Tests bestanden: ${passed} / ${res.tests.length}`;
+            for (const tr of res.tests) {
+              text += `\n  - ${tr.passed ? '[OK]' : '[FEHLER]'} ${tr.label}`;
+            }
+            item.stdout = text;
+            outEl.textContent = text;
             updateExamProgress();
             renderExamNavGrid();
           } catch (err) {
@@ -6726,6 +6817,10 @@ json.dumps({
         mirrorEl: document.getElementById('ide-mirror'),
         acEl: document.getElementById('ide-autocomplete'),
         sigEl: document.getElementById('ide-sig-help'),
+        bodyEl: document.getElementById('ide-editor-body'),
+        resizeHandleEl: document.getElementById('ide-resize-handle'),
+        defaultHeight: 360,
+        onResize: h => { STATE.ideEditorHeight = h; },
         onChange: () => {
           if (STATE.isSandbox) {
             STATE.sandboxCode = editor.value;
@@ -6735,6 +6830,22 @@ json.dumps({
         },
         onRun: () => executeCurrentIde(false)
       });
+
+      const expandBtn = document.getElementById('ide-expand-btn');
+      if (expandBtn) {
+        expandBtn.addEventListener('click', () => {
+          STATE.ideExpanded = !STATE.ideExpanded;
+          const sidebarCol = document.getElementById('ide-sidebar-col');
+          const mainCol = document.getElementById('ide-main-col');
+          if (sidebarCol && mainCol) {
+            sidebarCol.classList.toggle('hidden', STATE.ideExpanded);
+            mainCol.classList.toggle('lg:col-span-8', !STATE.ideExpanded);
+            mainCol.classList.toggle('lg:col-span-12', STATE.ideExpanded);
+          }
+          expandBtn.textContent = STATE.ideExpanded ? 'Breite: Standard' : 'Breite: Vollbild';
+          if (STATE.mainEditorCtrl) STATE.mainEditorCtrl.sync();
+        });
+      }
 
       document.getElementById('ide-filter-module').addEventListener('change', renderIdeSidebar);
       document.getElementById('ide-filter-diff').addEventListener('change', renderIdeSidebar);
