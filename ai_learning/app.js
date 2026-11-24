@@ -1551,6 +1551,15 @@ json.dumps({
     }
 
     function startExam() {
+      const participantNameInput = document.getElementById('exam-participant-name');
+      const participantName = participantNameInput.value.trim();
+      if (!participantName) {
+        showToast('Bitte gib vor dem Start deinen Namen ein.');
+        participantNameInput.focus();
+        return;
+      }
+      participantNameInput.value = '';
+
       const mode = document.querySelector('input[name="exam-mode"]:checked')?.value || 'short';
       const shortCount = Number(document.getElementById('short-count-slider').value) || 12;
       const includeIde = document.getElementById('exam-include-ide').checked;
@@ -1565,6 +1574,8 @@ json.dumps({
       }
 
       STATE.exam = {
+        participantName,
+        startedAt: new Date().toISOString(),
         mode,
         allowHints,
         items,
@@ -1941,15 +1952,58 @@ json.dumps({
       const percent = maxPoints > 0 ? (earnedPoints / maxPoints) * 100 : 0;
       const ihk = getIhkGrade(percent);
 
+      const completedAt = new Date();
+      const elapsedSec = Math.max(0, exam.totalDurationSec - exam.remainingSec);
+      const review = exam.items.map(item => {
+        const data = item.data;
+        const isMc = item.kind === 'mc';
+        const plainDescription = isMc
+          ? data.question
+          : String(data.description || data.title || '').replace(/<[^>]*>/g, ' ');
+        return {
+          kind: item.kind,
+          id: data.id,
+          title: data.title || '',
+          moduleId: data.moduleId,
+          moduleTitle: MODULES.find(module => module.id === data.moduleId)?.title || '',
+          difficulty: data.difficulty || 'Unbekannt',
+          type: isMc ? (data.type || 'Multiple Choice') : 'Praxis-IDE',
+          question: plainDescription,
+          promptCode: isMc ? (data.code || '') : (data.starter || ''),
+          options: isMc && Array.isArray(data.options) ? data.options.slice() : [],
+          answer: isMc
+            ? (item.answer === null ? 'Keine Antwort' : data.options[item.answer])
+            : (item.code || ''),
+          correctAnswer: isMc ? data.options[data.correctIndex] : (data.solution || ''),
+          explanation: isMc ? (data.explanation || '') : '',
+          solution: isMc ? '' : (data.solution || ''),
+          stdout: item.stdout || '',
+          testResults: Array.isArray(item.testResults)
+            ? item.testResults.map(test => ({ label: test.label, passed: Boolean(test.passed) }))
+            : [],
+          earnedPoints: item.earnedPoints,
+          maxPoints: item.maxPoints
+        };
+      });
+      const difficulties = [...new Set(review.map(item => item.difficulty))];
+      const taskTypes = [...new Set(review.map(item => item.type))];
+
       PROGRESS.examHistory.unshift({
-        date: new Date().toLocaleString('de-DE'),
+        id: `${completedAt.getTime()}-${Math.random().toString(36).slice(2, 8)}`,
+        name: exam.participantName,
+        date: completedAt.toLocaleString('de-DE'),
+        completedAt: completedAt.toISOString(),
+        elapsedSec,
         mode: exam.mode === 'long' ? 'Lang-LEK (30 Fragen)' : `Kurz-LEK (${exam.items.length} Fragen)`,
         earnedPoints,
         maxPoints,
         percent: Math.round(percent * 10) / 10,
         grade: ihk.grade,
         label: ihk.label,
-        passed: ihk.passed
+        passed: ihk.passed,
+        difficulties,
+        taskTypes,
+        review
       });
       if (PROGRESS.examHistory.length > 25) PROGRESS.examHistory.length = 25;
       saveProgress();
@@ -2105,6 +2159,13 @@ json.dumps({
       const solvedQ = PROGRESS.solvedIds.length;
       const totalIde = IDE_TASKS.length;
       const solvedIde = PROGRESS.ideSolvedIds.length;
+      const leaderboard = [...PROGRESS.examHistory].sort((a, b) => {
+        const scoreDiff = Number(b.percent || 0) - Number(a.percent || 0);
+        if (scoreDiff !== 0) return scoreDiff;
+        const timeDiff = Number(a.elapsedSec || Infinity) - Number(b.elapsedSec || Infinity);
+        if (Number.isFinite(timeDiff) && timeDiff !== 0) return timeDiff;
+        return String(b.completedAt || '').localeCompare(String(a.completedAt || ''));
+      });
 
       container.innerHTML = `
         <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 space-y-6">
@@ -2134,41 +2195,75 @@ json.dumps({
             </div>
           </div>
 
-          <div>
-            <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-3">Bisherige LEK-Ergebnisse</h3>
-            ${PROGRESS.examHistory.length === 0 ? `
+          <section class="space-y-3">
+            <div class="flex flex-wrap items-end justify-between gap-2">
+              <div>
+                <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Bestenliste</h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">Sortiert nach Prozentwert, bei Gleichstand nach Bearbeitungszeit. Klicke eine LEK an, um Aufgaben und Lösungen anzusehen.</p>
+              </div>
+            </div>
+            ${leaderboard.length === 0 ? `
               <p class="text-sm text-zinc-500 dark:text-zinc-400">Noch keine LEK abgeschlossen. Starte eine Prüfung im Reiter <strong>LEK / Prüfung</strong>.</p>
             ` : `
-              <div class="overflow-x-auto rounded-lg border border-zinc-200 dark:border-zinc-800">
-                <table class="w-full text-left text-xs">
-                  <thead class="bg-zinc-100 dark:bg-zinc-800/80">
-                    <tr>
-                      <th class="px-3.5 py-2.5">Datum</th>
-                      <th class="px-3.5 py-2.5">Prüfungsart</th>
-                      <th class="px-3.5 py-2.5">Punkte</th>
-                      <th class="px-3.5 py-2.5">Prozent</th>
-                      <th class="px-3.5 py-2.5">IHK-Note</th>
-                      <th class="px-3.5 py-2.5">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
-                    ${PROGRESS.examHistory.map(h => `
-                      <tr>
-                        <td class="px-3.5 py-2 font-mono">${escapeHtml(h.date)}</td>
-                        <td class="px-3.5 py-2">${escapeHtml(h.mode)}</td>
-                        <td class="px-3.5 py-2 tabular-nums font-mono">${h.earnedPoints} / ${h.maxPoints}</td>
-                        <td class="px-3.5 py-2 tabular-nums font-mono">${h.percent} %</td>
-                        <td class="px-3.5 py-2 font-semibold">Note ${escapeHtml(h.grade)} (${escapeHtml(h.label)})</td>
-                        <td class="px-3.5 py-2 ${h.passed ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'} font-medium">
-                          ${h.passed ? 'Bestanden' : 'Nicht bestanden'}
-                        </td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
+              <div class="space-y-2">
+                ${leaderboard.map((h, index) => {
+                  const difficulties = Array.isArray(h.difficulties) ? h.difficulties : [];
+                  const taskTypes = Array.isArray(h.taskTypes) ? h.taskTypes : [];
+                  const review = Array.isArray(h.review) ? h.review : [];
+                  return `
+                    <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950/40 overflow-hidden">
+                      <summary class="cursor-pointer list-none p-4 hover:bg-zinc-50 dark:hover:bg-zinc-800/40">
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                          <div class="flex min-w-0 items-center gap-3">
+                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${index === 0 ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300' : 'bg-zinc-100 text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300'} font-bold">${index + 1}</span>
+                            <div class="min-w-0">
+                              <div class="font-semibold">${escapeHtml(h.name || 'Name unbekannt')}</div>
+                              <div class="text-xs text-zinc-500 dark:text-zinc-400">${escapeHtml(h.date || 'Datum unbekannt')} · ${escapeHtml(h.mode || 'LEK')} · ${Number.isFinite(Number(h.elapsedSec)) ? formatTime(h.elapsedSec) : 'Zeit nicht gespeichert'}</div>
+                            </div>
+                          </div>
+                          <div class="text-right">
+                            <div class="text-lg font-bold tabular-nums">${Number(h.percent || 0).toFixed(1)} %</div>
+                            <div class="text-xs ${h.passed ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'}">Note ${escapeHtml(h.grade || '–')} · ${h.passed ? 'Bestanden' : 'Nicht bestanden'}</div>
+                          </div>
+                        </div>
+                        <div class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-zinc-500 dark:text-zinc-400">
+                          <span>Punkte: <span class="font-mono">${Number(h.earnedPoints || 0)} / ${Number(h.maxPoints || 0)}</span></span>
+                          <span>Niveau: ${escapeHtml(difficulties.join(', ') || 'keine Detaildaten')}</span>
+                          <span>Aufgaben: ${escapeHtml(taskTypes.join(', ') || 'keine Detaildaten')}</span>
+                        </div>
+                      </summary>
+                      <div class="border-t border-zinc-200 dark:border-zinc-800 p-4 space-y-3">
+                        ${review.length === 0 ? `
+                          <p class="text-sm text-zinc-500 dark:text-zinc-400">Für diese ältere LEK wurden noch keine Aufgaben- und Antwortdetails gespeichert.</p>
+                        ` : review.map((item, taskIndex) => `
+                          <article class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 space-y-2 text-sm">
+                            <div class="flex flex-wrap justify-between gap-2">
+                              <h4 class="font-semibold">Aufgabe ${taskIndex + 1}: ${escapeHtml(item.title || item.id || item.type || 'Aufgabe')}</h4>
+                              <span class="text-xs text-zinc-500 dark:text-zinc-400">${escapeHtml(item.difficulty || '')} · ${escapeHtml(item.type || '')} · ${Number(item.earnedPoints || 0)} / ${Number(item.maxPoints || 0)} Pkt.</span>
+                            </div>
+                            <p>${escapeHtml(item.question || '')}</p>
+                            ${item.moduleTitle ? `<p class="text-xs text-zinc-500 dark:text-zinc-400">Themenbereich: ${escapeHtml(item.moduleTitle)}</p>` : ''}
+                            ${item.promptCode ? `<div><div class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Startcode</div><pre class="mt-1 overflow-x-auto rounded bg-zinc-100 dark:bg-zinc-900 p-3 text-xs font-mono">${escapeHtml(item.promptCode)}</pre></div>` : ''}
+                            ${item.kind === 'mc' ? `
+                              ${item.options.length ? `<ul class="space-y-1 text-xs">${item.options.map(option => `<li class="rounded px-2 py-1 ${option === item.correctAnswer ? 'bg-emerald-50 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300' : option === item.answer ? 'bg-rose-50 text-rose-800 dark:bg-rose-950/40 dark:text-rose-300' : ''}">${option === item.answer ? 'Deine Auswahl: ' : ''}${escapeHtml(option)}${option === item.correctAnswer ? ' ✓' : ''}</li>`).join('')}</ul>` : ''}
+                              <p><span class="font-medium">Deine Antwort:</span> ${escapeHtml(item.answer || 'Keine Antwort')}</p>
+                              <p><span class="font-medium">Richtige Lösung:</span> <span class="text-emerald-700 dark:text-emerald-300">${escapeHtml(item.correctAnswer || '')}</span></p>
+                              ${item.explanation ? `<p class="text-zinc-500 dark:text-zinc-400">${escapeHtml(item.explanation)}</p>` : ''}
+                            ` : `
+                              <div><div class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Dein Code</div><pre class="mt-1 overflow-x-auto rounded bg-zinc-100 dark:bg-zinc-900 p-3 text-xs font-mono">${escapeHtml(item.answer || 'Kein Code eingereicht')}</pre></div>
+                              <div><div class="text-xs font-medium text-zinc-500 dark:text-zinc-400">Musterlösung</div><pre class="mt-1 overflow-x-auto rounded bg-zinc-100 dark:bg-zinc-900 p-3 text-xs font-mono">${escapeHtml(item.solution || item.correctAnswer || '')}</pre></div>
+                              ${item.stdout ? `<p><span class="font-medium">Deine Ausgabe:</span> <code>${escapeHtml(item.stdout)}</code></p>` : ''}
+                              ${item.testResults.length ? `<ul class="text-xs space-y-1">${item.testResults.map(test => `<li class="${test.passed ? 'text-emerald-700 dark:text-emerald-300' : 'text-rose-700 dark:text-rose-300'}">${test.passed ? '✓' : '✗'} ${escapeHtml(test.label || 'Test')}</li>`).join('')}</ul>` : ''}
+                            `}
+                          </article>
+                        `).join('')}
+                      </div>
+                    </details>
+                  `;
+                }).join('')}
               </div>
             `}
-          </div>
+          </section>
         </div>
       `;
 
