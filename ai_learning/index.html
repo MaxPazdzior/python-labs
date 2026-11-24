@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Python LEK-Trainer – FIAE Umschulung (IBB)</title>
+
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    /* Design-System: neutrale Slate-Skala, eine technische Akzentfarbe (gedecktes Blau),
+       semantische Farben nur fuer Zustaende. Wirkt auch auf per JS erzeugtes Markup. */
+    const scale = (a) => Object.fromEntries([50,100,200,300,400,500,600,700,800,900,950].map((k, i) => [k, a[i]]));
+    const neutral = scale(['#f5f5f5','#ebebeb','#d9d9d9','#a8a8a8','#8c8c8c','#6e6e6e','#4f4f4f','#2c2c2c','#161616','#0c0c0c','#000000']);
+    const accent  = scale(['#eaf2f9','#d3e4f2','#a9c9e3','#86b8e0','#5fa0d8','#3d80b0','#306998','#285a82','#214c6c','#1b3f5a','#122a3d']);
+    const ok      = scale(['#eef6f1','#d6eadd','#b0d4bd','#86bb9b','#5fa07b','#458764','#397052','#2f5b44','#274a38','#1f3c2e','#12261c']);
+    const warn    = scale(['#fff9e0','#fff0b3','#ffe680','#ffdc57','#ffd43b','#e6b800','#b89200','#8f7200','#6b5600','#4d3e00','#2e2500']);
+    const err     = scale(['#fbeeee','#f5d9d8','#ebb5b3','#dd8b88','#cd6764','#b94a47','#9a3b39','#7c3231','#632a29','#4f2323','#2c1313']);
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+            mono: ['JetBrains Mono', 'Fira Code', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          colors: {
+            zinc: neutral, slate: neutral, gray: neutral, neutral: neutral, stone: neutral,
+            blue: accent, sky: accent, cyan: accent, indigo: accent, violet: accent, purple: accent, fuchsia: accent, pink: accent,
+            emerald: ok, green: ok, teal: ok, lime: ok,
+            amber: warn, yellow: warn, orange: warn,
+            red: err, rose: err
+          },
+          borderRadius: { DEFAULT: '4px', md: '4px', lg: '4px', xl: '6px', '2xl': '6px', '3xl': '6px' },
+          boxShadow: { sm: 'none', DEFAULT: 'none', md: 'none', lg: 'none', xl: '0 0 0 1px rgba(0,0,0,.25)', '2xl': 'none' }
+        }
+      }
+    };
+  </script>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 min-h-screen antialiased">
+
+  <!-- ==================== SEITENLEISTE / APP-SHELL ==================== -->
+  <header class="app-header">
+    <div class="app-brand">
+      <div class="min-w-0">
+        <h1 class="brand-word"><b>Python</b> LEK-Trainer</h1>
+        <p class="brand-sub">FIAE · IBB</p>
+      </div>
+    </div>
+
+    <nav class="app-nav" aria-label="Hauptnavigation">
+      <button data-tab="practice" type="button" class="nav-tab flex items-center gap-2 px-3.5 py-2.5 border-b-2 text-sm font-medium whitespace-nowrap transition">
+        <span class="nav-idx">01</span>
+        <span class="nav-label">Themen-Übungen</span>
+        <span id="nav-pool-badge" class="nav-count tabular-nums text-[11px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">0</span>
+      </button>
+      <button data-tab="ide" type="button" class="nav-tab flex items-center gap-2 px-3.5 py-2.5 border-b-2 text-sm font-medium whitespace-nowrap transition">
+        <span class="nav-idx">02</span>
+        <span class="nav-label">Python-IDE &amp; Praxis</span>
+        <span id="nav-ide-badge" class="nav-count tabular-nums text-[11px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400">52</span>
+      </button>
+      <button data-tab="exam" type="button" class="nav-tab flex items-center gap-2 px-3.5 py-2.5 border-b-2 text-sm font-medium whitespace-nowrap transition">
+        <span class="nav-idx">03</span>
+        <span class="nav-label">LEK / Prüfung</span>
+      </button>
+      <button data-tab="stats" type="button" class="nav-tab flex items-center gap-2 px-3.5 py-2.5 border-b-2 text-sm font-medium whitespace-nowrap transition">
+        <span class="nav-idx">04</span>
+        <span class="nav-label">Statistik &amp; Verlauf</span>
+      </button>
+    </nav>
+
+    <div class="app-tools">
+      <div id="pyodide-status" class="flex items-center gap-2 px-2.5 py-1 rounded-md text-xs font-medium bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800">
+        <span id="pyodide-dot" class="w-2 h-2 rounded-full bg-amber-500"></span>
+        <span id="pyodide-text">Python 3.12 wird geladen ...</span>
+      </div>
+      <button id="theme-toggle" type="button" title="Farbschema wechseln" aria-label="Farbschema wechseln"
+        class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-xs font-medium text-zinc-700 dark:text-zinc-200">
+        <span id="theme-icon" class="block w-4 h-4 shrink-0"></span>
+        <span id="theme-label">Dark Mode</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== HAUPTBEREICH ==================== -->
+  <main class="app-main">
+
+    <!-- ================================================================ -->
+    <!-- TAB 1: THEMEN-ÜBUNGEN (11 MODULE, ANFAENGER -> PYTHON ENTWICKLER) -->
+    <!-- ================================================================ -->
+    <section id="tab-practice" class="tab-panel space-y-5">
+      <div class="page-header">
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+          <div>
+            <div class="page-eyebrow">Modul-Übungen</div>
+            <h2 class="text-lg sm:text-xl font-bold tracking-tight">Themen-Übungen</h2>
+            <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+              11 Module in aufsteigendem Schwierigkeitsgrad (Anfänger bis <strong class="font-semibold text-zinc-900 dark:text-zinc-200">Python Entwickler</strong>), einschließlich Transferaufgaben und IBB-Theorie.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="practice-filter-diff" aria-label="Schwierigkeitsgrad filtern" class="px-3 py-2 rounded-lg text-sm bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-600">
+              <option value="all">Alle Schwierigkeiten</option>
+              <option value="Anfänger">Anfänger (2 Pkt.)</option>
+              <option value="Fortgeschritten">Fortgeschritten (3 Pkt.)</option>
+              <option value="Profi">Profi (4 Pkt.)</option>
+              <option value="Experte">Experte (5 Pkt.)</option>
+              <option value="Python Entwickler">Python Entwickler (7 Pkt.)</option>
+            </select>
+            <select id="practice-filter-type" aria-label="Aufgabentyp filtern" class="px-3 py-2 rounded-lg text-sm bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-600">
+              <option value="all">Alle Aufgabentypen</option>
+              <option value="Multiple Choice">Multiple Choice</option>
+              <option value="Code-Ausgabe">Code-Ausgabe</option>
+              <option value="Endlich/Endlos">Endlich / Endlos</option>
+              <option value="Fehler finden">Fehleranalyse</option>
+            </select>
+            <button id="practice-shuffle-btn" type="button"
+              class="px-3.5 py-2 rounded-lg text-sm font-medium bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 transition">
+              Neu mischen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <aside class="lg:col-span-4 space-y-2" id="module-sidebar"></aside>
+        <div class="lg:col-span-8 space-y-4">
+          <div id="practice-card" class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-5 sm:p-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- TAB 2: PYTHON-IDE & PRAXIS-PROGRAMMIERAUFGABEN                   -->
+    <!-- ================================================================ -->
+    <section id="tab-ide" class="tab-panel hidden space-y-5">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <aside id="ide-sidebar-col" class="lg:col-span-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-3">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-sm font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Praxis-Aufgaben (<span id="ide-count-label">52</span>)</h2>
+            <button id="ide-sandbox-btn" type="button"
+              class="px-2.5 py-1 rounded-md text-xs font-medium border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+              Freie Sandbox
+            </button>
+          </div>
+          <select id="ide-filter-module" aria-label="Praxisaufgaben nach Modul filtern" class="w-full px-3 py-2 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700">
+            <option value="all">Alle 11 Module (Anfänger bis Python Entwickler)</option>
+          </select>
+          <select id="ide-filter-diff" aria-label="Praxisaufgaben nach Schwierigkeit filtern" class="w-full px-3 py-2 rounded-lg text-xs bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700">
+            <option value="all">Alle Schwierigkeiten</option>
+            <option value="Anfänger">Anfänger</option>
+            <option value="Fortgeschritten">Fortgeschritten</option>
+            <option value="Profi">Profi</option>
+            <option value="Experte">Experte</option>
+            <option value="Python Entwickler">Python Entwickler</option>
+          </select>
+          <div id="ide-task-list" class="space-y-1.5 max-h-[540px] overflow-y-auto pr-1"></div>
+        </aside>
+
+        <div id="ide-main-col" class="lg:col-span-8 space-y-4">
+          <div id="ide-task-header" class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-5"></div>
+
+          <div class="editor-shell rounded-xl border border-zinc-300 dark:border-zinc-800 bg-[#080808] text-[#d4d4d4] overflow-visible">
+            <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-[#0f0f0f] border-b border-[#1c1c1c] rounded-t-xl">
+              <div class="flex items-center gap-3 text-xs font-mono">
+                <span id="ide-filename" class="ide-file-tab">solution.py</span>
+                <span class="text-[#9a9a9a]">Python 3.12</span>
+                <span class="hidden md:inline text-[#9a9a9a]">Strg+Enter: Ausführen</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-1.5">
+                <button id="ide-run-btn" type="button"
+                  class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#ffd43b] hover:bg-[#ffe066] text-[#1b2a3a] font-semibold transition">
+                  Ausführen
+                </button>
+                <button id="ide-test-btn" type="button"
+                  class="px-3 py-1.5 rounded-md text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition">
+                  Tests prüfen
+                </button>
+                <button id="ide-hint-btn" type="button"
+                  class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#1c1c1c] hover:bg-[#262626] text-zinc-200 border border-[#2e2e2e] transition">
+                  Hinweis
+                </button>
+                <button id="ide-solution-btn" type="button"
+                  class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#1c1c1c] hover:bg-[#262626] text-zinc-200 border border-[#2e2e2e] transition">
+                  Musterlösung
+                </button>
+                <button id="ide-expand-btn" type="button" title="Editor auf volle Seitenbreite umschalten"
+                  class="hidden lg:inline-block px-3 py-1.5 rounded-md text-xs font-medium bg-[#1c1c1c] hover:bg-[#262626] text-zinc-200 border border-[#2e2e2e] transition">
+                  Breite: Vollbild
+                </button>
+                <button id="ide-reset-btn" type="button"
+                  class="px-3 py-1.5 rounded-md text-xs font-medium bg-[#1c1c1c] hover:bg-[#262626] text-zinc-300 border border-[#2e2e2e] transition">
+                  Zurücksetzen
+                </button>
+              </div>
+            </div>
+
+            <div id="ide-editor-body" class="flex bg-[#080808] relative" style="height: 360px;">
+              <pre id="ide-gutter" class="editor-gutter w-12 text-right text-[#9a9a9a] bg-[#080808] border-r border-[#1c1c1c] shrink-0 select-none">1</pre>
+              <div id="ide-editor-wrap" class="code-editor-wrap">
+                <div id="ide-mirror" class="caret-mirror" aria-hidden="true"></div>
+                <pre id="ide-highlight" class="code-highlight-layer" aria-hidden="true"></pre>
+                <textarea id="ide-editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off"
+                  class="code-input"></textarea>
+                <div id="ide-autocomplete" class="vscode-autocomplete hidden" role="listbox" aria-label="Code-Vorschläge"></div>
+                <div id="ide-sig-help" class="vscode-sig-help hidden" role="tooltip"></div>
+              </div>
+            </div>
+
+            <div id="ide-resize-handle" class="editor-resize-handle" role="separator" aria-orientation="horizontal"
+              title="Ziehen zum Vergrößern/Verkleinern · Doppelklick: An Codehöhe anpassen">
+              <span class="editor-resize-grip"></span>
+            </div>
+
+            <div class="flex items-center justify-between px-4 py-1 bg-[#306998] text-white text-[11px] font-mono select-none rounded-b-xl">
+              <div class="flex items-center gap-3">
+                <span id="ide-cursor-pos" class="tabular-nums">Zeile 1, Spalte 1</span>
+                <span>Spaces: 4</span>
+                <span class="hidden sm:inline">Unten ziehen: Fensterhöhe anpassen</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <span>UTF-8</span>
+                <span>Python 3.12</span>
+              </div>
+            </div>
+
+            <div id="ide-hint-box" class="hidden px-4 py-3 bg-[#0f0f0f] border-t border-[#1c1c1c] text-zinc-200 text-sm rounded-b-xl"></div>
+          </div>
+
+          <!-- Konsolenausgabe & Automatisierte Unit-Tests -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-2">
+              <div class="flex items-center justify-between">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Konsolenausgabe</h3>
+                <button id="ide-clear-console" type="button" class="text-xs text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200">Leeren</button>
+              </div>
+              <pre id="ide-console" class="min-h-[120px] max-h-[240px] overflow-auto rounded-lg bg-[#080808] text-zinc-200 p-3 text-xs font-mono whitespace-pre-wrap"># Keine Ausgabe. Start über „Ausführen“ oder „Tests prüfen“.</pre>
+            </div>
+
+            <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 space-y-2">
+              <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Automatisierte Unit-Tests</h3>
+              <div id="ide-test-results" class="min-h-[120px] max-h-[240px] overflow-auto space-y-2 text-xs text-zinc-500 dark:text-zinc-400">
+                Noch keine Tests ausgeführt. „Tests prüfen“ validiert die Lösung gegen alle Testfälle.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- TAB 3: LEK / PRUEFUNGSSIMULATION MIT IHK-NOTENSPIEGEL            -->
+    <!-- ================================================================ -->
+    <section id="tab-exam" class="tab-panel hidden space-y-6">
+      <!-- 3A: Konfiguration -->
+      <div id="exam-setup-view" class="max-w-3xl mx-auto rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-6 sm:p-8 space-y-6">
+        <div class="border-b border-zinc-200 dark:border-zinc-800 pb-4">
+          <div class="text-xs font-semibold uppercase tracking-wider text-blue-600 dark:text-blue-400">
+            Leistungserfolgskontrolle · IHK-Bewertungsschlüssel
+          </div>
+          <h2 class="text-2xl font-bold mt-1">Python LEK konfigurieren</h2>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+            Die Aufgaben werden zufällig und ausgewogen aus allen elf Modulen zusammengestellt (Python-Praxis sowie IBB-Theorie). Die Auswertung erfolgt nach dem <strong>IHK-100-Punkte-Schlüssel</strong>.
+          </p>
+        </div>
+
+        <!-- Auswahl Kurz vs Lang -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <label class="exam-mode-card cursor-pointer rounded-xl border-2 border-blue-600 bg-blue-50/40 dark:bg-blue-950/20 p-5 transition block">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-base">Kurz-LEK</span>
+              <input type="radio" name="exam-mode" value="short" checked class="accent-blue-600 w-4 h-4" />
+            </div>
+            <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              10 bis 15 Aufgaben (frei wählbar) aus allen elf Themenbereichen · 20 Minuten Bearbeitungszeit.
+            </p>
+            <div class="mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-800">
+              <div class="flex items-center justify-between text-xs font-medium mb-1.5">
+                <span>Anzahl Aufgaben:</span>
+                <span id="short-count-label" class="tabular-nums font-semibold text-blue-600 dark:text-blue-400">12 Fragen</span>
+              </div>
+              <input id="short-count-slider" type="range" min="10" max="15" value="12" class="w-full accent-blue-600 cursor-pointer" />
+              <div class="flex justify-between text-[11px] font-mono text-zinc-400 mt-0.5">
+                <span>10</span><span>11</span><span>12</span><span>13</span><span>14</span><span>15</span>
+              </div>
+            </div>
+          </label>
+
+          <label class="exam-mode-card cursor-pointer rounded-xl border-2 border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 p-5 transition block">
+            <div class="flex items-center justify-between">
+              <span class="font-semibold text-base">Lang-LEK (Vollprüfung)</span>
+              <input type="radio" name="exam-mode" value="long" class="accent-blue-600 w-4 h-4" />
+            </div>
+            <p class="text-xs text-zinc-600 dark:text-zinc-400 mt-1.5 leading-relaxed">
+              Exakt 30 Aufgaben aus allen elf Themenbereichen · 45 Minuten Bearbeitungszeit.
+            </p>
+            <div class="mt-4 pt-3 border-t border-zinc-200 dark:border-zinc-800 text-xs text-zinc-500 dark:text-zinc-400 space-y-1">
+              <div>• Alle Schwierigkeitsstufen (Anfänger bis Experte)</div>
+              <div>• Theorie, Code-Tracing, Schleifenanalyse und Fehlersuche</div>
+            </div>
+          </label>
+        </div>
+
+        <!-- Zusatzoptionen -->
+        <div class="space-y-3 rounded-lg bg-zinc-50 dark:bg-zinc-950/60 border border-zinc-200 dark:border-zinc-800 p-4">
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input id="exam-include-ide" type="checkbox" checked class="mt-0.5 accent-blue-600 w-4 h-4 rounded" />
+            <div>
+              <span class="text-sm font-medium">Praktische Programmieraufgaben einschließen (6 Pkt., Entwickler-Niveau: 8 Pkt.)</span>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                Kurz-LEK: 1 Praxisaufgabe, Lang-LEK: 2 Praxisaufgaben. Automatische Auswertung mit Python 3.12.
+              </p>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input id="exam-include-dev" type="checkbox" class="mt-0.5 accent-blue-600 w-4 h-4 rounded" />
+            <div>
+              <span class="text-sm font-medium">Schwierigkeitsgrad „Python Entwickler“ einschließen (7 Pkt. / Aufgabe)</span>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                Fügt besonders anspruchsvolle, themenübergreifende Aufgaben hinzu (Kurz-LEK: 2 Aufgaben, Lang-LEK: 4 Aufgaben; bei aktivierter IDE-Option inkl. 1 Praxisaufgabe auf Entwickler-Niveau). Ohne Haken werden nur Aufgaben bis Experte gewählt.
+              </p>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 cursor-pointer">
+            <input id="exam-allow-hints" type="checkbox" checked class="mt-0.5 accent-blue-600 w-4 h-4 rounded" />
+            <div>
+              <span class="text-sm font-medium">Hinweise während der Prüfung zulassen</span>
+              <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-0.5">
+                Pro Aufgabe kann ein Hinweis eingeblendet werden (Abzug von 0,5 Punkten pro genutztem Hinweis).
+              </p>
+            </div>
+          </label>
+        </div>
+
+        <button id="exam-start-btn" type="button"
+          class="w-full py-3 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">
+          Prüfung starten
+        </button>
+      </div>
+
+      <!-- 3B: Aktive Pruefung -->
+      <div id="exam-active-view" class="hidden space-y-5">
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-5">
+            <div>
+              <div class="text-[11px] font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Restzeit</div>
+              <div id="exam-timer" class="tabular-nums text-xl font-mono font-bold text-zinc-900 dark:text-zinc-100">20:00</div>
+            </div>
+            <div class="h-8 w-px bg-zinc-200 dark:bg-zinc-800"></div>
+            <div>
+              <div class="text-[11px] font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Bearbeitet</div>
+              <div id="exam-progress-text" class="tabular-nums text-sm font-semibold">0 / 12</div>
+            </div>
+          </div>
+
+          <div class="flex-1 min-w-[160px] max-w-md">
+            <div class="w-full h-2 rounded-full bg-zinc-200 dark:bg-zinc-800 overflow-hidden">
+              <div id="exam-progress-bar" class="h-full bg-blue-600 transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <button id="exam-submit-btn" type="button"
+            class="px-4 py-2 rounded-lg text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">
+            Prüfung abgeben
+          </button>
+        </div>
+
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-4">
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+            <span class="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Aufgabenübersicht</span>
+            <span class="text-xs text-zinc-500 dark:text-zinc-400">Grün: beantwortet · Gelb: markiert · IDE: Praxisaufgabe</span>
+          </div>
+          <div id="exam-nav-grid" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <div id="exam-question-card" class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/70 p-5 sm:p-6"></div>
+      </div>
+
+      <!-- 3C: Ergebnis & IHK-Notenspiegel -->
+      <div id="exam-result-view" class="hidden space-y-6"></div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- TAB 4: STATISTIK & IHK-VERLAUF                                   -->
+    <!-- ================================================================ -->
+    <section id="tab-stats" class="tab-panel hidden space-y-6">
+      <div id="stats-content" class="space-y-6"></div>
+    </section>
+  </main>
+
+  <!-- ==================== CUSTOM MODAL ==================== -->
+  <div id="app-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-zinc-950/60 p-4">
+    <div class="max-w-md w-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 space-y-4">
+      <h3 id="modal-title" class="text-base font-bold">Hinweis</h3>
+      <p id="modal-body" class="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed"></p>
+      <div id="modal-actions" class="flex justify-end gap-2 pt-2"></div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 space-y-2 pointer-events-none"></div>
+
+  <!-- Pyodide 0.26.4 (Python 3.12 im Browser) -->
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js" defer></script>
+  <script src="./aufgaben.js"></script>
+
+  <!-- ==================== HAUPT-ANWENDUNGSLOGIK ==================== -->
+  <script src="./app.js"></script>
+</body>
+</html>
