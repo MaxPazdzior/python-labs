@@ -1,0 +1,474 @@
+    * { box-sizing: border-box; }
+    html.dark { color-scheme: dark; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+    /* Monospace-Schrift ohne OpenType-Ligaturen, damit Python-Operatoren (>=, <=, !=, ==, ->) unverfaelscht bleiben */
+    code, pre, kbd, .font-mono, textarea.code-input, .editor-gutter {
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-ligatures: none !important;
+      font-feature-settings: "liga" 0, "calt" 0, "dlig" 0 !important;
+    }
+
+    /* Inline-Code in Aufgabenstellungen (Light & Dark Mode) */
+    :not(pre) > code {
+      font-size: 0.85em;
+      padding: 0.1rem 0.35rem;
+      border-radius: 0.25rem;
+      background-color: #eceef1;
+      color: #181d23;
+      border: 1px solid #dcdfe4;
+    }
+    html.dark :not(pre) > code {
+      background-color: #232930;
+      color: #eceef1;
+      border-color: #353c47;
+    }
+
+    /* Python Syntax Highlighting – VS Code Dark+ (Python / Pylance Palette) */
+    .py-cm { color: #6b8299; }
+    .py-str { color: #a3d9a5; }
+    .py-kw-ctrl { color: #8ab4f8; }
+    .py-kw-blue { color: #6aa9e0; }
+    .py-type { color: #6cc6b8; }
+    .py-fn { color: #ffd866; }
+    .py-num { color: #f0a87c; }
+    .py-var { color: #cfe3f7; }
+    .py-punct { color: #d4d4d4; }
+
+    /* VS Code Live-Overlay-Editor (exakt deckungsgleiche Metriken fuer pixelgenauen Cursor) */
+    .editor-shell {
+      position: relative;
+    }
+    .editor-gutter {
+      user-select: none;
+      overflow: hidden;
+      padding: 0.75rem 0.65rem 2rem 0.5rem;
+      line-height: 1.6;
+      font-size: 0.875rem;
+    }
+    .code-editor-wrap {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      background-color: #080808;
+      overflow: hidden;
+    }
+    .code-highlight-layer,
+    textarea.code-input,
+    .caret-mirror {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      border: 0;
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-variant-ligatures: none !important;
+      font-feature-settings: "liga" 0, "calt" 0, "dlig" 0 !important;
+      font-size: 0.875rem;
+      font-weight: 400;
+      line-height: 1.6;
+      letter-spacing: 0;
+      word-spacing: 0;
+      tab-size: 4;
+      -moz-tab-size: 4;
+      white-space: pre;
+      overflow-wrap: normal;
+      word-break: normal;
+      box-sizing: border-box;
+    }
+    .code-highlight-layer {
+      padding: 0.75rem 2rem 2rem 0.75rem;
+      pointer-events: none;
+      overflow: hidden;
+      color: #d4d4d4;
+      z-index: 1;
+    }
+    textarea.code-input {
+      padding: 0.75rem 2rem 2rem 0.75rem;
+      background: transparent;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      caret-color: #aeafad;
+      resize: none;
+      overflow: auto;
+      z-index: 2;
+      outline: none;
+    }
+    textarea.code-input::selection {
+      background: rgba(38, 79, 120, 0.65);
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+    }
+    .caret-mirror {
+      padding: 0.75rem 2rem 2rem 0.75rem;
+      visibility: hidden;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    /* Ziehbare Griffleiste zum Vergroessern des Code-Fensters */
+    .editor-resize-handle {
+      height: 11px;
+      background-color: #0f0f0f;
+      border-top: 1px solid #1c1c1c;
+      cursor: ns-resize;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      touch-action: none;
+      user-select: none;
+      transition: background-color 0.15s ease;
+    }
+    .editor-resize-handle:hover,
+    .editor-resize-handle:active {
+      background-color: #1a1a1a;
+    }
+    .editor-resize-grip {
+      width: 38px;
+      height: 3px;
+      border-radius: 9999px;
+      background-color: #586170;
+      transition: background-color 0.15s ease;
+    }
+    .editor-resize-handle:hover .editor-resize-grip,
+    .editor-resize-handle:active .editor-resize-grip {
+      background-color: #ffffff;
+    }
+
+    /* VS Code IntelliSense Autocomplete & Signature Help Overlays */
+    .vscode-autocomplete {
+      position: absolute;
+      z-index: 30;
+      min-width: 250px;
+      max-width: 380px;
+      max-height: 210px;
+      overflow-y: auto;
+      background-color: #0f0f0f;
+      border: 1px solid #2e2e2e;
+      border-radius: 0.375rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.55);
+      font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.75rem;
+      color: #cccccc;
+    }
+    .vscode-ac-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+    .vscode-ac-item:last-child { border-bottom: 0; }
+    .vscode-ac-item.active {
+      background-color: #1a1a1a;
+      color: #ffffff;
+    }
+    .vscode-ac-badge {
+      font-size: 0.65rem;
+      padding: 0.05rem 0.3rem;
+      border-radius: 0.2rem;
+      background-color: #1c1c1c;
+      color: #cfe3f7;
+      flex-shrink: 0;
+    }
+    .vscode-ac-item.active .vscode-ac-badge {
+      background-color: #2f5a92;
+      color: #ffffff;
+    }
+
+    .vscode-sig-help {
+      position: absolute;
+      z-index: 29;
+      max-width: 420px;
+      padding: 0.45rem 0.65rem;
+      background-color: #0f0f0f;
+      border: 1px solid #2e2e2e;
+      border-radius: 0.375rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      font-size: 0.75rem;
+      color: #cccccc;
+      pointer-events: none;
+    }
+
+    .tabular-nums { font-variant-numeric: tabular-nums; }
+
+    /* Scrollbars */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(113, 113, 122, 0.35); border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(113, 113, 122, 0.55); }
+  
+
+/* ===== Design-System-Ergaenzungen ===== */
+html { -webkit-text-size-adjust: 100%; }
+body { font-size: 14px; line-height: 1.55; }
+h1, h2, h3 { letter-spacing: -0.01em; }
+
+/* Keine Verlaeufe, Glow, Weichzeichner oder verspielte Bewegung */
+html [class*="bg-gradient"] { background-image: none !important; }
+html [class*="shadow"] { box-shadow: none; }
+html [class*="backdrop-blur"] { backdrop-filter: none; -webkit-backdrop-filter: none; }
+html [class*="hover:scale"]:hover, html [class*="hover:-translate"]:hover { transform: none !important; }
+html .animate-bounce, html .animate-ping { animation: none; }
+#app-modal > div { box-shadow: 0 0 0 1px rgba(0,0,0,.3); }
+
+/* Lesebreite fuer Fliesstext in Aufgabenkarten */
+#practice-card p, #exam-question-card p, #ide-task-header p { max-width: 72ch; }
+
+/* Zahlen und Kennwerte */
+#exam-timer, #exam-progress-text, #nav-pool-badge, #nav-ide-badge, #ide-cursor-pos,
+#ide-count-label, #short-count-label, #stats-content { font-variant-numeric: tabular-nums; }
+
+/* Tastenkuerzel */
+kbd { font-size: 0.8em; padding: 0.05rem 0.35rem; border: 1px solid #c3c8d0; border-radius: 4px; background: #f6f7f9; }
+html.dark kbd { border-color: #353c47; background: #181d23; color: #c3c8d0; }
+
+/* Fokus-Zustaende */
+html :focus-visible { outline: 2px solid #4f82c4; outline-offset: 1px; }
+textarea.code-input:focus-visible { outline: none; }
+.editor-shell:focus-within { border-color: #4f82c4; }
+
+/* Editor: Kopfleiste als Dateireiter, Konsole */
+.editor-shell { border-radius: 6px; overflow: hidden !important; }
+#ide-console { border: 1px solid #1c1c1c; }
+
+/* Navigation: kein Zeilenumbruch, klare Reiter */
+.nav-tab { border-radius: 0; }
+
+/* Scrollbars: auf beiden Themes klar erkennbar */
+* { scrollbar-width: thin; scrollbar-color: #8b94a1 transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,148,161,0.45); }
+::-webkit-scrollbar-thumb:hover { background: rgba(139,148,161,0.7); }
+.code-editor-wrap textarea.code-input { scrollbar-color: #586170 #080808; }
+
+/* Responsiv */
+@media (max-width: 1023px) {
+  #ide-task-list { max-height: 320px; }
+  .editor-gutter { width: 2.75rem; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+
+/* ================= Python-Identitaet ================= */
+:root { --py-blue:#306998; --py-blue-d:#285a82; --py-yellow:#ffd43b; --ink:#0b0b0b; }
+html body { background-color: #f4f4f5; font-size: 15px; }
+html.dark body { background-color: #000000; }
+
+/* Kopfleiste in Markenfarbe */
+.app-header { background: var(--py-blue); border-bottom: 1px solid #1c1c1c; color: #fff; }
+html.dark .app-header { background: #050505; border-bottom: 1px solid #1c1c1c; }
+.app-header .brand-mark {
+  font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 700; font-size: 13px; letter-spacing: -0.04em;
+  color: var(--py-yellow); background: rgba(10,21,34,.55); border: 1px solid rgba(255,255,255,.18);
+  border-radius: 4px; padding: 6px 8px; line-height: 1; font-variant-ligatures: none;
+}
+.app-header h1 { color: #fff; font-size: 17px; }
+.app-header p { color: #c4c4c4 !important; }
+.app-header [class*="bg-zinc"], .app-header #theme-toggle { background: rgba(255,255,255,.08) !important; border-color: rgba(255,255,255,.2) !important; color: #ededed !important; }
+.app-header #theme-toggle:hover { background: rgba(255,255,255,.16) !important; }
+.app-header .nav-tab { color: #d4d4d4; border-bottom-width: 3px; border-color: transparent; padding-top: 12px; padding-bottom: 10px; }
+.app-header .nav-tab:hover { color: #fff; }
+.app-header .nav-tab.border-blue-600 { color: #fff !important; border-color: var(--py-yellow) !important; }
+.app-header .nav-tab [class*="bg-zinc"] { font-family: 'JetBrains Mono', monospace; }
+
+/* Karten: flach, mit Python-Blau als Kopfkante */
+#practice-card, #exam-question-card, #ide-task-header, #exam-setup-view, #exam-result-view > div, #stats-content > div {
+  border-top: 3px solid var(--py-blue);
+}
+html.dark #practice-card, html.dark #exam-question-card, html.dark #ide-task-header, html.dark #exam-setup-view { border-top-color: #3d80b0; }
+html body [class*="dark:bg-zinc-900/70"] { background-color: #fff; }
+html.dark body [class*="dark:bg-zinc-900/70"] { background-color: #0b0b0b; }
+html body [class*="border-zinc-200"] { border-color: #e0e0e0; }
+html.dark body [class*="dark:border-zinc-800"] { border-color: #1f3550; }
+
+/* Ueberschriften mit Kommentar-Praefix wie in Python-Code */
+#tab-practice > div:first-child h2::before, #exam-setup-view h2::before {
+  content: "# "; color: #c99a00; font-family: 'JetBrains Mono', monospace; font-weight: 500;
+}
+html.dark #tab-practice > div:first-child h2::before, html.dark #exam-setup-view h2::before { color: var(--py-yellow); }
+h2 { font-weight: 650; }
+
+/* Schaltflaechen */
+button:not(.nav-tab) { font-weight: 500; }
+#exam-start-btn, #practice-shuffle-btn { background-color: var(--py-blue); color: #fff; }
+#exam-start-btn:hover, #practice-shuffle-btn:hover { background-color: var(--py-blue-d); }
+
+/* Editor: Dateireiter wie in VS Code, Python-Statusleiste */
+.editor-shell { border: 1px solid #1c1c1c; }
+.ide-file-tab {
+  display: inline-block; color: #ededed; background: #080808; border-top: 2px solid var(--py-yellow);
+  padding: 7px 14px; margin: -10px 0 -11px; font-weight: 500;
+}
+.editor-gutter { color: #6b6b6b !important; }
+.editor-resize-handle:hover, .editor-resize-handle:active { background-color: var(--py-blue); }
+textarea.code-input { caret-color: var(--py-yellow); }
+textarea.code-input::selection { background: rgba(48,105,152,.6); }
+
+/* Fokus in Python-Blau/Gelb */
+html :focus-visible { outline: 2px solid var(--py-blue); outline-offset: 1px; }
+html.dark :focus-visible { outline-color: var(--py-yellow); }
+.editor-shell:focus-within { border-color: var(--py-blue); }
+
+
+/* ======================================================================
+   STRUKTUR: App-Shell mit fester Seitenleiste, Seiten-Kopfzeilen, Werkbank
+   ====================================================================== */
+:root { --side: 248px; --nav-bg: #050505; --nav-line: #1c1c1c; }
+html body { display: block; }
+
+/* ---- Seitenleiste ---- */
+.app-header {
+  position: sticky; top: 0; z-index: 40; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+  padding: 10px 16px 0; background: var(--nav-bg); border-bottom: 1px solid var(--nav-line); color: #d4d4d4;
+}
+.app-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.app-header .brand-mark { font-size: 12px; padding: 5px 7px; background: #0f0f0f; border-color: #2a2a2a; }
+.app-header .brand-title { color: #fff; font-size: 15px; line-height: 1.2; font-weight: 650; }
+.app-header .brand-sub { color: #8f8f8f !important; font-size: 11px; font-family: 'JetBrains Mono', monospace; margin: 0; }
+.app-nav { display: flex; gap: 2px; overflow-x: auto; order: 3; width: 100%; }
+.app-tools { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+.app-header .nav-tab {
+  border: 0 !important; border-bottom: 2px solid transparent !important; border-radius: 0; padding: 10px 12px;
+  color: #b5b5b5; background: transparent; font-weight: 500; font-size: 13px;
+}
+.app-header .nav-tab:hover { color: #fff; background: rgba(255,255,255,.04); }
+.app-header .nav-tab.border-blue-600 { color: #fff !important; border-bottom-color: #ffd43b !important; }
+.nav-idx { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: #7a7a7a; }
+.nav-tab.border-blue-600 .nav-idx { color: #ffd43b; }
+.app-header .nav-count { margin-left: auto; background: #141414 !important; color: #b5b5b5 !important; border: 1px solid #2a2a2a; }
+.app-header #pyodide-status { font-size: 11px; font-family: 'JetBrains Mono', monospace; background: #0f0f0f !important; border-color: #2a2a2a !important; color: #b5b5b5 !important; }
+.app-header #theme-toggle { background: #0f0f0f !important; border-color: #2a2a2a !important; color: #d4d4d4 !important; font-size: 12px; }
+
+.app-main { width: 100%; padding: 20px 16px 48px; }
+
+@media (min-width: 1024px) {
+  .app-header {
+    position: fixed; inset: 0 auto 0 0; width: var(--side); flex-direction: column; align-items: stretch; flex-wrap: nowrap;
+    gap: 0; padding: 0; border-bottom: 0; border-right: 1px solid var(--nav-line); overflow-y: auto;
+  }
+  .app-brand { padding: 18px 16px 16px; border-bottom: 1px solid var(--nav-line); }
+  .app-nav { order: 0; flex-direction: column; gap: 0; width: auto; padding: 14px 0; overflow: visible; flex: 1; }
+  .app-nav::before { content: "BEREICHE"; font: 600 10px 'JetBrains Mono', monospace; letter-spacing: .12em; color: #7a7a7a; padding: 0 16px 8px; }
+  .app-header .nav-tab { width: 100%; padding: 10px 16px; white-space: normal; text-align: left;
+    border-bottom: 0 !important; border-left: 3px solid transparent !important; }
+  .app-header .nav-tab.border-blue-600 { border-left-color: #ffd43b !important; border-bottom-color: transparent !important; background: #121212; }
+  .app-tools { flex-direction: column; align-items: stretch; margin: 0; padding: 14px 16px; gap: 8px; border-top: 1px solid var(--nav-line); }
+  .app-main { margin-left: var(--side); width: auto; padding: 28px 36px 64px; max-width: 1560px; }
+}
+
+/* ---- Seiten-Kopfzeile statt Karte ---- */
+.page-header { padding: 0 0 18px; margin-bottom: 20px; border-bottom: 1px solid #e0e0e0; }
+html.dark .page-header { border-bottom-color: #1c1c1c; }
+.page-eyebrow { font: 600 11px 'JetBrains Mono', monospace; letter-spacing: .08em; text-transform: uppercase; color: #306998; margin-bottom: 4px; }
+html.dark .page-eyebrow { color: #7aaed3; }
+.page-header h2 { font-size: 24px; letter-spacing: -0.02em; }
+.page-header p { max-width: 64ch; }
+
+/* ---- Themen-Uebungen: Modulliste links als Verzeichnisbaum, Aufgabe rechts ---- */
+#tab-practice > .grid { grid-template-columns: 300px minmax(0, 1fr); gap: 28px; }
+#tab-practice > .grid > * { grid-column: auto !important; }
+#module-sidebar { position: sticky; top: 20px; max-height: calc(100vh - 48px); overflow-y: auto; border: 1px solid #e0e0e0; border-radius: 6px; background: #fff; }
+html.dark #module-sidebar { border-color: #1c1c1c; background: #0b0b0b; }
+#module-sidebar > * { margin: 0 !important; border-radius: 0 !important; border-width: 0 0 1px 0 !important; background: transparent !important; }
+#module-sidebar > *:last-child { border-bottom-width: 0 !important; }
+#practice-card { min-height: 420px; padding: 28px 32px; }
+
+/* ---- IDE: Explorer links, Werkbank rechts ---- */
+#tab-ide > .grid { grid-template-columns: 290px minmax(0, 1fr); gap: 20px; }
+#tab-ide > .grid > * { grid-column: auto !important; }
+#tab-ide > .grid > #ide-sidebar-col.hidden { display: none; }
+#tab-ide > .grid:has(#ide-sidebar-col.hidden) { grid-template-columns: minmax(0, 1fr); }
+#ide-sidebar-col { position: sticky; top: 20px; max-height: calc(100vh - 48px); overflow-y: auto; display: flex; flex-direction: column; border-radius: 6px; padding: 0 !important; gap: 0; }
+#ide-sidebar-col > * { padding: 10px 12px; margin: 0 !important; }
+#ide-sidebar-col > div:first-child { border-bottom: 1px solid #e0e0e0; background: #f7f7f7; }
+html.dark #ide-sidebar-col > div:first-child { border-bottom-color: #1c1c1c; background: #050505; }
+#ide-task-list { max-height: none !important; flex: 1; padding: 6px !important; }
+#ide-task-header { border-top-width: 1px; border-top-color: inherit; border-left: 3px solid #306998; padding: 16px 20px; }
+
+/* Werkbank: Editor + Konsole/Tests bilden eine zusammenhaengende Flaeche */
+#ide-main-col { gap: 0 !important; }
+#ide-main-col > * + * { margin-top: 14px !important; }
+#ide-main-col > .grid { gap: 0; border: 1px solid #1c1c1c; border-radius: 6px; overflow: hidden; background: #080808; margin-top: 0 !important; border-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; }
+#ide-main-col > .editor-shell { border-bottom-left-radius: 0; border-bottom-right-radius: 0; margin-bottom: 0; }
+#ide-main-col > .editor-shell + .grid { margin-top: 0 !important; }
+#ide-main-col > .grid > div { border: 0 !important; border-radius: 0 !important; background: transparent !important; padding: 12px 16px !important; }
+#ide-main-col > .grid > div:first-child { border-right: 1px solid #1c1c1c !important; }
+#ide-main-col > .grid h3 { color: #9a9a9a !important; font-family: 'JetBrains Mono', monospace; letter-spacing: .08em; }
+#ide-main-col > .grid #ide-test-results { color: #b5b5b5; }
+#ide-main-col > .grid button { color: #9a9a9a; }
+#ide-main-col > .grid #ide-console { background: transparent; border: 0; padding: 4px 0; }
+
+/* ---- Pruefung ---- */
+#exam-setup-view { margin-left: 0 !important; max-width: 1000px; }
+#exam-active-view > div:first-child { position: sticky; top: 0; z-index: 20; border-radius: 0 0 6px 6px; background-color: #fff; }
+html.dark #exam-active-view > div:first-child { background-color: #0b0b0b; }
+#exam-question-card { padding: 28px 32px; }
+.exam-mode-card { border-width: 1px !important; border-radius: 6px; }
+.exam-mode-card:has(input:checked) { border-color: #306998 !important; background: rgba(48,105,152,.08) !important; box-shadow: inset 3px 0 0 #306998; }
+
+/* ---- Kleinere Bildschirme ---- */
+@media (max-width: 1023px) {
+  #tab-practice > .grid, #tab-ide > .grid { grid-template-columns: minmax(0, 1fr); }
+  #module-sidebar, #ide-sidebar-col { position: static; max-height: 360px; }
+  #practice-card, #exam-question-card { padding: 18px; }
+  #ide-main-col > .grid > div:first-child { border-right: 0 !important; border-bottom: 1px solid #1c1c1c !important; }
+}
+
+
+/* ======================================================================
+   DEEP BLACK + einheitliches Button-System
+   ====================================================================== */
+html.dark body { background-color: #000; color: #ededed; }
+html.dark .page-header { border-bottom-color: #1c1c1c; }
+html.dark #module-sidebar, html.dark [class*="dark:bg-zinc-900/70"] { background-color: #0a0a0a; }
+html.dark .app-header { background: #050505; }
+.editor-shell, .code-editor-wrap, #ide-editor-body { background-color: #080808; }
+
+/* Marke: reine Wortmarke */
+.app-brand { display: block; }
+.brand-word { font: 400 16px/1.25 'Inter', system-ui, sans-serif; letter-spacing: -0.01em; color: #a8a8a8; margin: 0; white-space: nowrap; }
+.brand-word b { font-weight: 700; color: #fff; }
+.app-header .brand-sub { white-space: nowrap; margin-top: 3px; font-size: 11px; letter-spacing: .04em; color: #7a7a7a !important; }
+
+/* Basis fuer alle Buttons: lesbar, einheitliche Hoehe */
+button { font-family: inherit; font-size: 13px; line-height: 1.2; letter-spacing: 0; }
+#tab-practice button, #tab-ide button, #tab-exam button, #app-modal button, #theme-toggle { min-height: 32px; }
+
+/* Sekundaer (Standard auf dunkel) */
+html.dark #ide-sandbox-btn, html.dark #ide-clear-console, html.dark #app-modal button:not([class*="bg-blue"]),
+.editor-shell > div:first-child button:not(#ide-run-btn):not(#ide-test-btn) {
+  background-color: #111 !important; border: 1px solid #2e2e2e !important; color: #e8e8e8 !important;
+}
+html.dark #ide-sandbox-btn:hover, html.dark #app-modal button:not([class*="bg-blue"]):hover,
+.editor-shell > div:first-child button:not(#ide-run-btn):not(#ide-test-btn):hover {
+  background-color: #1c1c1c !important; border-color: #444 !important; color: #fff !important;
+}
+#ide-main-col > .grid button { color: #a8a8a8 !important; }
+#ide-main-col > .grid button:hover { color: #fff !important; }
+
+/* Primaer: Python-Blau, weisse Schrift */
+#ide-test-btn, #exam-start-btn, #practice-shuffle-btn, #exam-submit-btn, #app-modal button[class*="bg-blue"] {
+  background-color: #306998 !important; border: 1px solid #3d80b0 !important; color: #fff !important; font-weight: 600;
+}
+#ide-test-btn:hover, #exam-start-btn:hover, #practice-shuffle-btn:hover, #exam-submit-btn:hover, #app-modal button[class*="bg-blue"]:hover {
+  background-color: #3d80b0 !important;
+}
+/* Ausfuehren: Python-Gelb, dunkle Schrift */
+#ide-run-btn { background-color: #ffd43b !important; border: 1px solid #ffd43b !important; color: #111 !important; font-weight: 700; }
+#ide-run-btn:hover { background-color: #ffe269 !important; }
+
+/* Eingabeelemente und Seitenleiste */
+html.dark select { background-color: #0c0c0c; border-color: #2e2e2e; color: #ededed; }
+html.dark select option { background-color: #0c0c0c; color: #ededed; }
+.app-header #theme-toggle { background: #0f0f0f !important; border: 1px solid #2a2a2a !important; color: #ededed !important; font-weight: 500; }
+.app-header #theme-toggle:hover { background: #1a1a1a !important; }
+.app-header #pyodide-status { background: #0f0f0f !important; border-color: #2a2a2a !important; color: #d4d4d4 !important; }
+.app-header .nav-tab { color: #b5b5b5; }
+.app-header .nav-tab:hover { color: #fff; background: #111; }
+.app-header .nav-tab.border-blue-600 { background: #121212; }
+.app-header .nav-count { background: #141414 !important; border-color: #2a2a2a; color: #d4d4d4 !important; }
+html.dark .editor-resize-handle { background-color: #0f0f0f; border-top-color: #1c1c1c; }
