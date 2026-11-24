@@ -17,9 +17,9 @@ This repository serves as a structured collection of my practical coursework and
 
 ```
 python-labs/
+├── ai_learning/     # Learning tools by AI
 ├── concepts/        # Annotated theory scripts and code examples
 ├── exercises/       # Coursework assignments (basic to complex)
-├── ai_learning/     # Learning tools Codes by AI
 ├── .gitignore       # Ignored temporary files and virtual environments
 ├── LICENSE          # MIT License
 └── README.md        # Project documentation
